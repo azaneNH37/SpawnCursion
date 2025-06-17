@@ -1,8 +1,8 @@
 package com.azane.spcurs.debug.log;
 
 import com.azane.spcurs.SpcursMod;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import lombok.Getter;
+import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.*;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.appender.FileAppender;
@@ -45,10 +45,9 @@ public class DebugLogger
 
     private static final Marker marker = MarkerManager.getMarker(modId+"DebugLog");
 
-    @ExpectPlatform
     public static Path getGameDir()
     {
-        throw new AssertionError("This method should be implemented by the platform-specific code.");
+        return FMLPaths.GAMEDIR.get();
     }
 
     public static void init()
