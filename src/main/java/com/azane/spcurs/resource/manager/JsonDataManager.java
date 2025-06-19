@@ -99,6 +99,6 @@ public class JsonDataManager<T> extends SimplePreparableReloadListener<Map<Resou
     protected void debugLogAllData()
     {
         DebugLogger.log(LogLv.INFO, marker, "Loaded %d data entries with class type %s".formatted(dataMap.size(), dataClass.getName()));
-        dataMap.forEach((id, data) -> DebugLogger.log(LogLv.NULL, "Data ID: {}, Data: {}",id,data));
+        dataMap.forEach((id, data) -> DebugLogger.log(LogLv.NULL, "Data ID: {}, Data: {}",id,data.toString()));
     }
 }

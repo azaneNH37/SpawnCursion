@@ -1,5 +1,8 @@
 package com.azane.spcurs;
 
+import com.azane.spcurs.debug.log.DebugLogger;
+import com.azane.spcurs.network.OgnmChannel;
+import com.azane.spcurs.resource.service.JsonTypeManagers;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +21,8 @@ public class SpcursMod
 
     public SpcursMod(FMLJavaModLoadingContext context)
     {
+        DebugLogger.init();
+
         IEventBus modEventBus = context.getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
@@ -29,6 +34,9 @@ public class SpcursMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-
+        event.enqueueWork(()-> {
+            JsonTypeManagers.loadJsonTypeManagers();
+            OgnmChannel.DEFAULT.initialize();
+        });
     }
 }

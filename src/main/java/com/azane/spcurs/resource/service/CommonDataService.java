@@ -2,13 +2,19 @@ package com.azane.spcurs.resource.service;
 
 
 import com.azane.spcurs.SpcursMod;
+import com.azane.spcurs.genable.data.ScGson;
+import com.azane.spcurs.genable.data.sc.ScSpawner;
+import com.azane.spcurs.resource.manager.CommonDataManager;
+import com.azane.spcurs.resource.manager.DynamicDataManager;
 import com.azane.spcurs.resource.manager.INetworkCacheReloadListener;
+import com.azane.spcurs.resource.manager.JsonDataTypeManager;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 
 public abstract class CommonDataService implements IResourceProvider
@@ -17,12 +23,19 @@ public abstract class CommonDataService implements IResourceProvider
 
     //此处添加需要全局管理的data类
     //从json导入的data
+    protected CommonDataManager<ScSpawner> spawners;
 
     //游戏内自存储的data
 
     //此处添加继承自IResourceProvider的接口实现
-
-
+    public ScSpawner getSpawner(ResourceLocation id)
+    {
+        return spawners.getData(id);
+    }
+    public Set<Map.Entry<ResourceLocation, ScSpawner>> getAllSpawners()
+    {
+        return spawners.getAllDataEntries();
+    }
 
 
     /**
@@ -32,11 +45,11 @@ public abstract class CommonDataService implements IResourceProvider
     protected void reloadAndBind()
     {
        //实例化全局数据
-
+        spawners = new CommonDataManager<>(ScSpawner.class, ScGson.INSTANCE.GSON, "spcurs/spawner","SpcursSpawner");
 
         ImmutableMap.Builder<ResourceLocation, INetworkCacheReloadListener> builder = ImmutableMap.builder();
         //注册C/S传递和reload加载
-
+        register(spawners, "spawner", builder);
         listeners = builder.build();
     }
 
