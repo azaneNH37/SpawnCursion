@@ -2,6 +2,8 @@ package com.azane.spcurs.resource.manager;
 
 import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.debug.log.LogLv;
+import com.azane.spcurs.resource.helper.ExtractHelper;
+import com.azane.spcurs.resource.helper.IresourceLocation;
 import com.azane.spcurs.resource.helper.ParserHelper;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
@@ -15,6 +17,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * 服务端侧数据管理器<br>
@@ -25,6 +28,14 @@ public class CommonDataManager<T> extends JsonDataManager<T> implements INetwork
 {
     @Getter
     protected Map<ResourceLocation, String> networkCache;
+
+    public CommonDataManager(Class<T> dataClass, Gson pGson, String directory, String marker, Consumer<JsonDataManager<T>> onDataMapInit) {
+        super(dataClass, pGson, directory, marker,onDataMapInit);
+    }
+
+    public CommonDataManager(Class<T> dataClass, Gson pGson, FileToIdConverter directory, String marker, Consumer<JsonDataManager<T>> onDataMapInit) {
+        super(dataClass, pGson, directory, marker,onDataMapInit);
+    }
 
     public CommonDataManager(Class<T> dataClass, Gson pGson, String directory, String marker) {
         super(dataClass, pGson, directory, marker);
@@ -58,6 +69,8 @@ public class CommonDataManager<T> extends JsonDataManager<T> implements INetwork
             try {
                 T data = parseJson(id,element);
                 if (data != null) {
+                    if(data instanceof IresourceLocation rlData)
+                        rlData.setId(ExtractHelper.extractPureId(id));
                     dataMap.put(id, data);
                 }
             } catch (JsonParseException | IllegalArgumentException e) {
@@ -65,6 +78,7 @@ public class CommonDataManager<T> extends JsonDataManager<T> implements INetwork
             }
         }
         DebugLogger.log(LogLv.INFO, getMarker(), "Accepting Data Cache from Network: %s".formatted(cache.size()));
-        debugLogAllData();
+        getOnDataMapInit().accept(this);
+        //debugLogAllData();
     }
 }

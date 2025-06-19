@@ -22,6 +22,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 /**
  * 通用数据管理器<br>
@@ -40,16 +43,27 @@ public class JsonDataManager<T> extends SimplePreparableReloadListener<Map<Resou
     private final Marker marker;
     @Getter
     private final FileToIdConverter fileToIdConverter;
+    @Getter
+    private final Consumer<JsonDataManager<T>> onDataMapInit;
 
-    public JsonDataManager(Class<T> dataClass, Gson pGson, String directory, String marker) {
-        this(dataClass, pGson, FileToIdConverter.json(directory), marker);
+    public JsonDataManager(Class<T> dataClass, Gson pGson, String directory, String marker, Consumer<JsonDataManager<T>> onDataMapInit)
+    {
+        this(dataClass, pGson, FileToIdConverter.json(directory), marker, onDataMapInit);
     }
-
-    public JsonDataManager(Class<T> dataClass, Gson pGson, FileToIdConverter fileToIdConverter, String marker) {
+    public JsonDataManager(Class<T> dataClass, Gson pGson, FileToIdConverter fileToIdConverter, String marker, Consumer<JsonDataManager<T>> onDataMapInit) {
         this.gson = pGson;
         this.dataClass = dataClass;
         this.marker = MarkerManager.getMarker(marker);
         this.fileToIdConverter = fileToIdConverter;
+        this.onDataMapInit = onDataMapInit;
+    }
+
+    public JsonDataManager(Class<T> dataClass, Gson pGson, String directory, String marker) {
+        this(dataClass, pGson, FileToIdConverter.json(directory), marker, dm -> {});
+    }
+
+    public JsonDataManager(Class<T> dataClass, Gson pGson, FileToIdConverter fileToIdConverter, String marker) {
+        this(dataClass,pGson,fileToIdConverter,marker,dm->{});
     }
 
     @NotNull
@@ -77,7 +91,8 @@ public class JsonDataManager<T> extends SimplePreparableReloadListener<Map<Resou
                 DebugLogger.log(LogLv.ERROR, marker, "Failed to parse data file %s".formatted(id));
             }
         }
-        debugLogAllData();
+        onDataMapInit.accept(this);
+        //debugLogAllData();
     }
 
     protected T parseJson(ResourceLocation rl, JsonElement element){ return ParserHelper.parseJsonStatic(gson,element,dataClass);}
@@ -96,7 +111,7 @@ public class JsonDataManager<T> extends SimplePreparableReloadListener<Map<Resou
         this.dataMap.clear();
     }
 
-    protected void debugLogAllData()
+    public void debugLogAllData()
     {
         DebugLogger.log(LogLv.INFO, marker, "Loaded %d data entries with class type %s".formatted(dataMap.size(), dataClass.getName()));
         dataMap.forEach((id, data) -> DebugLogger.log(LogLv.NULL, "Data ID: {}, Data: {}",id,data.toString()));

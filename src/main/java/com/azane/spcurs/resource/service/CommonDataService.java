@@ -45,7 +45,12 @@ public abstract class CommonDataService implements IResourceProvider
     protected void reloadAndBind()
     {
        //实例化全局数据
-        spawners = new CommonDataManager<>(ScSpawner.class, ScGson.INSTANCE.GSON, "spcurs/spawner","SpcursSpawner");
+        spawners = new CommonDataManager<>(ScSpawner.class, ScGson.INSTANCE.GSON, "spcurs/spawner","SpcursSpawner",jm->{
+            jm.getAllData().forEach((id, spawner) -> {
+                spawner.getCreatures().getSet().forEach((rid, creature) -> creature.setId(rid));
+            });
+            jm.debugLogAllData();
+        });
 
         ImmutableMap.Builder<ResourceLocation, INetworkCacheReloadListener> builder = ImmutableMap.builder();
         //注册C/S传递和reload加载
