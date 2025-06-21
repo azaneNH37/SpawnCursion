@@ -2,6 +2,7 @@ package com.azane.spcurs.genable.data.sc.collection;
 
 import com.azane.spcurs.genable.data.sc.ScCreature;
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Set;
 public class ScCreatures
 {
     @SerializedName("set")
+    @Getter
     private Map<ResourceLocation, ScCreature> set;
 
     public Set<Map.Entry<ResourceLocation, ScCreature>> entrySet()

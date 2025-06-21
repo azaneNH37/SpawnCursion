@@ -48,6 +48,9 @@ public abstract class CommonDataService implements IResourceProvider
         spawners = new CommonDataManager<>(ScSpawner.class, ScGson.INSTANCE.GSON, "spcurs/spawner","SpcursSpawner",jm->{
             jm.getAllData().forEach((id, spawner) -> {
                 spawner.getCreatures().getSet().forEach((rid, creature) -> creature.setId(rid));
+                int raw_color = spawner.getDisplayContext().getRenderColor();
+                raw_color &= 0xFFFFFFFF;
+                spawner.getDisplayContext().setRenderColor((raw_color & 0xFF000000) == 0 ? (raw_color | 0xFF000000) : raw_color);
             });
             jm.debugLogAllData();
         });

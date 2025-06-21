@@ -3,20 +3,29 @@ package com.azane.spcurs.spawn;
 import com.azane.spcurs.genable.data.sc.ScCreature;
 import com.azane.spcurs.genable.data.sc.ScSpawner;
 import com.azane.spcurs.resource.service.ServerDataService;
+import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.INBTSerializable;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+/**
+ * SpcursEntity represents a spawner entity in the game.<br>
+ * It manages the spawning of creatures based on the configured data.<br>
+ * {@link SpcursEntity} is the own and only entity that manages the spawning logic for a specific spawner.<br>
+ */
 public class SpcursEntity implements INBTSerializable<CompoundTag>
 {
     public static final long CHECK_ACTIVE_FREQ = 20L;
 
+    @Getter
+    @NotNull
     private final ResourceLocation spawnerID;
 
     private boolean active = false;
@@ -25,13 +34,13 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
 
     private LinkedList<ScCreatureSpawnData> spawnDataList = new LinkedList<>();
 
-    private SpcursEntity(ResourceLocation rl)
+    private SpcursEntity(@NotNull ResourceLocation rl)
     {
         this.spawnerID = rl;
     }
 
     @Nullable
-    public static SpcursEntity create(ResourceLocation rl,@Nullable CompoundTag tag)
+    public static SpcursEntity create(ResourceLocation rl,@Nullable CompoundTag tag,boolean isClientSide)
     {
         if(ServerDataService.get().getSpawner(rl) == null)
             return null;
@@ -39,8 +48,7 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
         if(tag == null)
         {
             ServerDataService.get().getSpawner(rl).getCreatures().entrySet()
-                .forEach(entry->
-                    entity.insertToSpawnList(new ScCreatureSpawnData(entry.getKey(), entry.getValue()))
+                .forEach(entry-> entity.insertToSpawnList(new ScCreatureSpawnData(entry.getKey(), entry.getValue()))
                 );
         }
         else
@@ -66,6 +74,7 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
     private void activeTick(ServerLevel level,BlockPos pos)
     {
         ticks++;
+        //DebugLogger.log("SpcursEntity active tick at " + pos + " for spawner " + spawnerID + ", ticks: " + ticks);
         while (!spawnDataList.isEmpty() && spawnDataList.getFirst().isReadyToSpawn(ticks))
         {
             ScCreatureSpawnData cache = spawnDataList.removeFirst();
@@ -74,10 +83,12 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
             if(targetCreature != null)
             {
                 if(!cache.isAbleToSpawn(targetCreature))
+                {
+                    cache.acceptUnitSpawn(targetCreature,0);
                     continue;
+                }
                 targetCreature.spawn(level,pos,spawner,cache);
-                if(cache.isAbleToSpawn(targetCreature))
-                    insertToSpawnList(cache);
+                insertToSpawnList(cache);
             }
         }
     }
@@ -106,6 +117,17 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
             }
         }
         spawnDataList.addLast(cache);
+    }
+
+    @Nullable
+    public ScCreatureSpawnData getScCreatureSpawnData(ResourceLocation scCreatureRl)
+    {
+        for (ScCreatureSpawnData spawnData : spawnDataList) {
+            if (spawnData.getScCreatureRl().equals(scCreatureRl)) {
+                return spawnData;
+            }
+        }
+        return null;
     }
 
     @Override

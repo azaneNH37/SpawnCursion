@@ -23,6 +23,10 @@ public class ScSpawner implements IresourceLocation
     @Getter
     private double activeRange = 64.0D;
 
+    @SerializedName("display")
+    @Getter
+    private ScDisplayContext displayContext = new ScDisplayContext();
+
     @Override
     public String toString()
     {

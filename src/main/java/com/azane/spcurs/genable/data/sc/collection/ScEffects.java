@@ -1,6 +1,5 @@
 package com.azane.spcurs.genable.data.sc.collection;
 
-import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.genable.data.ISpcursPlugin;
 import com.azane.spcurs.genable.data.ScGson;
 import com.azane.spcurs.resource.helper.ParserHelper;

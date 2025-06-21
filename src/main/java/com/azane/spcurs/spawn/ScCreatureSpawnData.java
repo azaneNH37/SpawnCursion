@@ -61,4 +61,13 @@ public class ScCreatureSpawnData implements INBTSerializable<CompoundTag>
         spawned = nbt.getInt("spawned");
         nextSpawnTick = nbt.getLong("nextSpawnTick");
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format(
+            "ScCreatureSpawnData{scCreatureRl=%s, killed=%d, spawned=%d, nextSpawnTick=%d}",
+            scCreatureRl, killed, spawned, nextSpawnTick
+        );
+    }
 }
