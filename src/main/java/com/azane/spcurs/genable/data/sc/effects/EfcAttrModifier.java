@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.UUID;
@@ -50,7 +51,16 @@ public class EfcAttrModifier implements ISpcursPlugin
         }
         AttributeInstance attrIns = entity.getAttribute(attribute);
         if(attrIns != null)
+        {
             attrIns.addPermanentModifier(modifier);
+            defaultAttrFix(entity,attribute);
+        }
+    }
+
+    private void defaultAttrFix(LivingEntity entity, Attribute attribute)
+    {
+        if(attribute == Attributes.MAX_HEALTH)
+            entity.setHealth(entity.getMaxHealth());
     }
 
     @Override
