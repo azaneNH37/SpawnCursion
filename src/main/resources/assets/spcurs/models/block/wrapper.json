@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "spcurs:block/spawner"
+    "all": "spcurs:block/wrapper"
   },
   "ambientocclusion": false,
   "render_type": "minecraft:translucent"

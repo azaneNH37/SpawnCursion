@@ -40,10 +40,10 @@ public class TransformSpawnBlock extends Block implements IEnterScSpawner
     @Override
     public void doScSpawnerReplacement(ServerLevel level, BlockPos pos, BlockState state)
     {
+        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         BlockPos newPos = posModifier.apply(pos);
         level.setBlock(newPos, ModBlock.SPAWNER.block.get().defaultBlockState(), 3);
         SpcursSpawnerBlockEntity.setSpawner(level,newPos,getScSpawnerID(level,pos,state));
-        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
     }
 
     @Override
