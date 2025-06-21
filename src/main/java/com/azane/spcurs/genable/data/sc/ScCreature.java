@@ -18,6 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.jetbrains.annotations.Nullable;
 
 @Getter
 public class ScCreature implements IresourceLocation
@@ -47,7 +49,7 @@ public class ScCreature implements IresourceLocation
 
     public void spawn(ServerLevel level, BlockPos centre, ScSpawner scSpawner, ScCreatureSpawnData spawnData)
     {
-        DebugLogger.log("Spawning creature " + id + " at " + centre + " with spawn data: " + spawnData);
+        //DebugLogger.log("Spawning creature " + id + " at " + centre + " with spawn data: " + spawnData);
         RandomSource random = level.getRandom();
         EntityType<?> creatureType = EntityType.byString(creature.toString()).orElse(EntityType.PIG);
         int success = 0;
@@ -75,6 +77,7 @@ public class ScCreature implements IresourceLocation
                 if (!level.addFreshEntity(entity))
                     break;
                 success++;
+                linkSpawner(level,centre,scSpawner,entity);
                 if(entity instanceof LivingEntity living)
                 {
                     effects.entrySet().forEach(entry->{
@@ -88,6 +91,69 @@ public class ScCreature implements IresourceLocation
             }
         }
         spawnData.acceptUnitSpawn(this,success);
+        //DebugLogger.log("Spawning creature " + id + " at " + centre + " with spawn data: " + spawnData);
+    }
+
+    public void linkSpawner(ServerLevel level,BlockPos pos,ScSpawner scSpawner,Entity entity)
+    {
+        CompoundTag tag = new CompoundTag();
+        tag.putLong("pos",pos.asLong());
+        tag.putString("level",level.toString());
+        tag.putString("ScCreature",id.toString());
+        entity.getPersistentData().put(IDENTIFIER, tag);
+    }
+
+    public static void feedbackSpawner(ServerLevel level, Entity entity, CompoundTag data, @Nullable DamageSource damageSource)
+    {
+        if(!(data.contains("pos") && data.contains("level") && data.contains("ScCreature")))
+        {
+            DebugLogger.error(MARKER,"ScCreature feedback data is invalid: " + data);
+            return;
+        }
+        BlockPos pos = BlockPos.of(data.getLong("pos"));
+        String levelName = data.getString("level");
+        if(!level.toString().equals(levelName))
+        {
+            DebugLogger.warn(MARKER,"ScCreature feedback level mismatch: expected " + level + ", got " + levelName);
+            return;
+        }
+        ResourceLocation creatureId = ResourceLocation.parse(data.getString("ScCreature"));
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if(blockEntity instanceof IScSpawner scBlockEntity)
+        {
+            SpcursEntity spawner = scBlockEntity.getSpawner();
+            if(spawner == null)
+            {
+                DebugLogger.warn(MARKER,"ScCreature feedback spawner is null at " + pos);
+                return;
+            }
+            ScCreatureSpawnData spawnData = spawner.getScCreatureSpawnData(creatureId);
+            ScSpawner scSpawner = spawner.getScSpawner();
+            ScCreature creature = scSpawner.getCreatures().get(creatureId);
+            if(spawnData == null)
+            {
+                DebugLogger.warn(MARKER,"ScCreature feedback spawn-data is null for creature " + creatureId + " at " + pos);
+                return;
+            }
+            if(creature == null)
+            {
+                DebugLogger.warn(MARKER,"ScCreature feedback creature is null for " + creatureId + " at " + pos);
+                return;
+            }
+            //DebugLogger.info(MARKER,"ScCreature feedback for " + creatureId + " at " + pos + ", entity: " + entity.getType() + ", damageSource: " + damageSource);
+            spawnData.acceptUnitKilled(spawner,creature,creature.shouldCountDeath(entity,damageSource));
+            //DebugLogger.log("Spawning creature feedback with spawn data: " + spawnData);
+            return;
+        }
+        DebugLogger.warn(MARKER,"ScCreature feedback block entity is not an IScSpawner: " + blockEntity + " at " + pos);
+    }
+
+    public boolean shouldCountDeath(Entity entity,DamageSource damageSource)
+    {
+        if(entity.getRemovalReason() != Entity.RemovalReason.KILLED)
+            return false;
+        //TODO: 这里可以添加伤害类型检查来判断是否应该计数死亡
+        return true;
     }
 
     @Override

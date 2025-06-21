@@ -9,11 +9,12 @@
       "c1":{
         "creature": "zombie",
         "spawn_config": {
-          "kill_amt": 10,
+          "kill_amt": 20,
           "create_amt": 30,
+          "existing_amt": 3,
           "spawn_cnt": 4,
           "interval": 80,
-          "limitation": "all",
+          "strategy": "limit",
           "range": 16,
           "first_spawn": 20
         },
@@ -36,21 +37,17 @@
       "c2":{
         "creature": "skeleton",
         "spawn_config": {
-          "kill_amt": 10,
-          "create_amt": 15,
-          "spawn_cnt": 3,
+          "kill_amt": 60,
+          "create_amt": 10,
+          "existing_amt": 10,
+          "spawn_cnt": 7,
           "interval": 60,
-          "limitation": "all",
+          "strategy": "limit",
           "range": 16,
           "first_spawn": 40
         },
         "effects": {
           "set": {
-            "attr-life1": {
-              "attr": "generic.max_health",
-              "op": "ADDITION",
-              "val": 20.0
-            }
           }
         }
       }

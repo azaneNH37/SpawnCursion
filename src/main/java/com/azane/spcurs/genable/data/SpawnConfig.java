@@ -10,32 +10,39 @@ public class SpawnConfig
     private int killAmt;
     @SerializedName("create_amt")
     private int createAmt;
+    @SerializedName("existing_amt")
+    private int existingAmt;
     @SerializedName("spawn_cnt")
     private int spawnCnt;
     @SerializedName("interval")
     private long interval = 400;
-    @SerializedName("limitation")
-    private SpawnLimit limitation;
+    @SerializedName("strategy")
+    private SpawnStrategy strategy = SpawnStrategy.limit;
     @SerializedName("range")
     private double range;
     @SerializedName("first_spawn")
     private long firstSpawn = 5;
 
-    public enum SpawnLimit
+    public enum SpawnStrategy
     {
         kill,
         create,
-        all,
-        any
+        limit
     }
 
-    public boolean spawnAvailable(int curKill,int curSpawn)
+    public boolean spawnAvailable(int curKill,int curSpawn,int curExist)
     {
-        return switch (limitation) {
+        return switch (strategy) {
             case kill -> curKill < killAmt;
             case create -> curSpawn < createAmt;
-            case all -> curKill < killAmt && curSpawn < createAmt;
-            case any -> curKill < killAmt || curSpawn < createAmt;
+            case limit -> curExist < existingAmt && curKill < killAmt;
+        };
+    }
+    public boolean spawnFinished(int curKill,int curSpawn,int curExist)
+    {
+        return switch (strategy) {
+            case kill, limit -> curKill >= killAmt;
+            case create -> curSpawn >= createAmt;
         };
     }
 
@@ -45,9 +52,10 @@ public class SpawnConfig
         StringBuilder builder = new StringBuilder("SpawnConfig{");
         builder.append("\n  killAmt=").append(killAmt)
             .append("\t  createAmt=").append(createAmt)
+            .append("\t  existingAmt=").append(existingAmt)
             .append("\t  spawnCnt=").append(spawnCnt)
             .append("\n  interval=").append(interval)
-            .append("\t  limitation=").append(limitation)
+            .append("\t  strategy=").append(strategy)
             .append("\t  range=").append(range)
             .append("\n  firstSpawn=").append(firstSpawn)
             .append("\n}");

@@ -1,6 +1,6 @@
 package com.azane.spcurs.block.entity;
 
-import com.azane.spcurs.debug.log.DebugLogger;
+import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.registry.ModBlockEntity;
 import com.azane.spcurs.spawn.IScSpawner;
 import com.azane.spcurs.spawn.SpcursEntity;
@@ -35,6 +35,8 @@ public class SpcursSpawnerBlockEntity extends BlockEntity implements IScSpawner
         if(pBlockEntity.spawner == null)
             return;
         pBlockEntity.spawner.tick((ServerLevel) pLevel,pPos);
+        //TODO: it is really-really ugly to set changed every tick, but in order to keep track of the tick, it is necessary?
+        pBlockEntity.setChanged();
     }
 
     /**
@@ -58,6 +60,7 @@ public class SpcursSpawnerBlockEntity extends BlockEntity implements IScSpawner
     public void load(CompoundTag pTag)
     {
         super.load(pTag);
+        SpcursMod.LOGGER.warn("load");
         if(pTag.contains("spawnerID"))
         {
             CompoundTag ctag = null;
@@ -73,6 +76,7 @@ public class SpcursSpawnerBlockEntity extends BlockEntity implements IScSpawner
     protected void saveAdditional(CompoundTag pTag)
     {
         super.saveAdditional(pTag);
+        SpcursMod.LOGGER.warn("saveAdditional");
         if(spawner != null)
         {
             pTag.putString("spawnerID",spawner.getSpawnerID().toString());
