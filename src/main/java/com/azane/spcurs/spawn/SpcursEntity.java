@@ -177,14 +177,14 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
         nbt.putLong("ticks", ticks);
         nbt.putInt("finishedSpawns", finishedSpawns);
         nbt.putString("spawnerID", spawnerID.toString());
-        DebugLogger.log("saved nbt: "+nbt.getAsString());
+        //DebugLogger.log("saved nbt: "+nbt.getAsString());
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt)
     {
-        DebugLogger.log("Deserializing SpcursEntity with spawnerID: " + nbt.getString("spawnerID"));
+        //DebugLogger.log("Deserializing SpcursEntity with spawnerID: " + nbt.getString("spawnerID"));
         if (!spawnerID.toString().equals(nbt.getString("spawnerID"))) {
             throw new IllegalArgumentException("SpawnerID mismatch");
         }

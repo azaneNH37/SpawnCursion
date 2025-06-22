@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ public class ScCreatures
 {
     @SerializedName("set")
     @Getter
-    private Map<ResourceLocation, ScCreature> set;
+    private LinkedHashMap<ResourceLocation, ScCreature> set;
 
     public Set<Map.Entry<ResourceLocation, ScCreature>> entrySet()
     {

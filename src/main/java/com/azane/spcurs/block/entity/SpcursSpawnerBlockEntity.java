@@ -60,7 +60,6 @@ public class SpcursSpawnerBlockEntity extends BlockEntity implements IScSpawner
     public void load(CompoundTag pTag)
     {
         super.load(pTag);
-        SpcursMod.LOGGER.warn("load");
         if(pTag.contains("spawnerID"))
         {
             CompoundTag ctag = null;
@@ -76,7 +75,6 @@ public class SpcursSpawnerBlockEntity extends BlockEntity implements IScSpawner
     protected void saveAdditional(CompoundTag pTag)
     {
         super.saveAdditional(pTag);
-        SpcursMod.LOGGER.warn("saveAdditional");
         if(spawner != null)
         {
             pTag.putString("spawnerID",spawner.getSpawnerID().toString());

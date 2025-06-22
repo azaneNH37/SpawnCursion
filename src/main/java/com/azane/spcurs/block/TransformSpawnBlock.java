@@ -34,7 +34,7 @@ public class TransformSpawnBlock extends Block implements IEnterScSpawner
     @Override
     public ResourceLocation getScSpawnerID(ServerLevel level, BlockPos pos, BlockState state)
     {
-        return ResourceLocation.tryBuild(SpcursMod.MOD_ID,"test");
+        return ResourceLocation.tryBuild(SpcursMod.MOD_ID,"test_ai");
     }
 
     @Override

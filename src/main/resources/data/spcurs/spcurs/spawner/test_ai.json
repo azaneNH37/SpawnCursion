@@ -1,0 +1,52 @@
+{
+  "active_range": 32,
+  "display": {
+    "img": "spcurs:spawner/default",
+    "render_color": 914431
+  },
+  "creatures": {
+    "set": {
+      "cow":{
+        "creature": "cow",
+        "spawn_config": {
+          "kill_amt": 20,
+          "create_amt": 30,
+          "existing_amt": 10,
+          "spawn_cnt": 4,
+          "interval": 80,
+          "strategy": "limit",
+          "range": 8,
+          "first_spawn": 20
+        },
+        "effects": {
+          "set": {
+            "attr-life1": {
+              "attr": "generic.max_health",
+              "op": "ADDITION",
+              "val": 100.0
+            },
+            "attr-atk1": {
+              "attr": "generic.attack_damage",
+              "op": "ADDITION",
+              "val": 10.0
+            },
+            "effc-power1": {
+              "effectID": "strength",
+              "level": 2,
+              "duration": -1,
+              "visible": true
+            },
+            "taradd-1": {
+              "priority": 1,
+              "target": "monster",
+              "must_see": false
+            },
+            "gatkm-1": {
+              "priority": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

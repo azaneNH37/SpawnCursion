@@ -9,15 +9,12 @@ import com.google.gson.annotations.SerializedName;
 import net.minecraft.resources.ResourceLocation;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class ScEffects
 {
     @SerializedName("set")
-    private Map<ResourceLocation, ISpcursPlugin> set = new HashMap<>();
+    private LinkedHashMap<ResourceLocation, ISpcursPlugin> set = new LinkedHashMap<>();
 
     public static class ScEffectDeserializer implements JsonDeserializer<ScEffects>
     {
