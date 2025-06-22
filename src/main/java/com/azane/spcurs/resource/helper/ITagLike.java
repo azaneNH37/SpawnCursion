@@ -1,12 +1,12 @@
 package com.azane.spcurs.resource.helper;
 
-import java.util.List;
+import java.util.Set;
 
 public interface ITagLike<T>
 {
     Class<T> getTagType();
 
-    List<T> getTagList();
+    Set<T> getContentList();
 
     @SuppressWarnings("unchecked")
     default <U> ITagLike<U> castToType(Class<U> type)

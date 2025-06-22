@@ -4,10 +4,12 @@ package com.azane.spcurs.resource.service;
 import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.genable.data.ScGson;
 import com.azane.spcurs.genable.data.sc.ScSpawner;
+import com.azane.spcurs.genable.tag.ScSpawnerTag;
 import com.azane.spcurs.resource.manager.CommonDataManager;
 import com.azane.spcurs.resource.manager.DynamicDataManager;
 import com.azane.spcurs.resource.manager.INetworkCacheReloadListener;
 import com.azane.spcurs.resource.manager.JsonDataTypeManager;
+import com.azane.spcurs.resource.manager.specific.TagLikeDataManager;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.resources.ResourceLocation;
 
@@ -24,6 +26,7 @@ public abstract class CommonDataService implements IResourceProvider
     //此处添加需要全局管理的data类
     //从json导入的data
     protected CommonDataManager<ScSpawner> spawners;
+    protected TagLikeDataManager<ScSpawnerTag,ResourceLocation> scTag;
 
     //游戏内自存储的data
 
@@ -35,6 +38,15 @@ public abstract class CommonDataService implements IResourceProvider
     public Set<Map.Entry<ResourceLocation, ScSpawner>> getAllSpawners()
     {
         return spawners.getAllDataEntries();
+    }
+
+    public ScSpawnerTag getSpawnerTag(ResourceLocation id)
+    {
+        return scTag.getData(id);
+    }
+    public Set<Map.Entry<ResourceLocation, ScSpawnerTag>> getAllSpawnerTags()
+    {
+        return scTag.getAllDataEntries();
     }
 
 
@@ -54,10 +66,12 @@ public abstract class CommonDataService implements IResourceProvider
             });
             jm.debugLogAllData();
         });
+        scTag = new TagLikeDataManager<>(ScSpawnerTag.class,ResourceLocation.class, GSON,"tags/spawner", "SpcursScSpawnerTag", null);
 
         ImmutableMap.Builder<ResourceLocation, INetworkCacheReloadListener> builder = ImmutableMap.builder();
         //注册C/S传递和reload加载
         register(spawners, "spawner", builder);
+        register(scTag, "spawner_tag", builder);
         listeners = builder.build();
     }
 

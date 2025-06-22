@@ -3,6 +3,7 @@ package com.azane.spcurs.resource.manager.specific;
 import com.azane.spcurs.resource.helper.ITagLike;
 import com.azane.spcurs.resource.helper.ExtractHelper;
 import com.azane.spcurs.resource.helper.IresourceLocation;
+import com.azane.spcurs.resource.manager.CommonDataManager;
 import com.azane.spcurs.resource.manager.DynamicDataManager;
 import com.azane.spcurs.resource.manager.JsonDataManager;
 import com.azane.spcurs.resource.manager.JsonDataTypeManager;
@@ -13,20 +14,20 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Consumer;
 
-public class TagLikeDataManager<U,T extends ITagLike<U>> extends DynamicDataManager<T>
+public class TagLikeDataManager<T extends ITagLike<U>,U> extends CommonDataManager<T>
 {
     @Getter
     private final Class<U> tagType;
 
-    public TagLikeDataManager(Class<T> dataClass, Class<U> tagType, Gson pGson, FileToIdConverter directory, String marker, JsonDataTypeManager manager, Consumer<JsonDataManager<T>> onDataMapInit)
+    public TagLikeDataManager(Class<T> dataClass, Class<U> tagType, Gson pGson, FileToIdConverter directory, String marker, Consumer<JsonDataManager<T>> onDataMapInit)
     {
-        super(dataClass, pGson, directory, marker, manager, onDataMapInit);
+        super(dataClass, pGson, directory, marker, onDataMapInit);
         this.tagType = tagType;
     }
 
-    public TagLikeDataManager(Class<T> dataClass,Class<U> tagType,Gson pGson, String directory, String marker, JsonDataTypeManager manager, Consumer<JsonDataManager<T>> onDataMapInit)
+    public TagLikeDataManager(Class<T> dataClass,Class<U> tagType,Gson pGson, String directory, String marker, Consumer<JsonDataManager<T>> onDataMapInit)
     {
-        this(dataClass, tagType, pGson, FileToIdConverter.json(directory), marker, manager, onDataMapInit);
+        this(dataClass, tagType, pGson, FileToIdConverter.json(directory), marker, onDataMapInit);
     }
 
     @Override

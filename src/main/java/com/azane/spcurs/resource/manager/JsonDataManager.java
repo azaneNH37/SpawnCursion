@@ -77,7 +77,8 @@ public class JsonDataManager<T> extends SimplePreparableReloadListener<Map<Resou
                 DebugLogger.log(LogLv.ERROR, marker, "Failed to parse data file %s".formatted(id));
             }
         }
-        onDataMapInit.accept(this);
+        if(onDataMapInit != null)
+            onDataMapInit.accept(this);
         //debugLogAllData();
     }
 

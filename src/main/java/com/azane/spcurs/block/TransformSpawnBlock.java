@@ -5,6 +5,7 @@ import com.azane.spcurs.block.entity.SpcursSpawnerBlockEntity;
 import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.registry.ModBlock;
 import com.azane.spcurs.spawn.IEnterScSpawner;
+import com.azane.spcurs.spawn.ScTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -34,7 +35,7 @@ public class TransformSpawnBlock extends Block implements IEnterScSpawner
     @Override
     public ResourceLocation getScSpawnerID(ServerLevel level, BlockPos pos, BlockState state)
     {
-        return ResourceLocation.tryBuild(SpcursMod.MOD_ID,"test_ai");
+        return ScTags.getSpawnerTag(ScTags.FEATURE_SC_I).getRandom();
     }
 
     @Override
