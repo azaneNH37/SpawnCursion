@@ -37,14 +37,6 @@ public class CommonDataManager<T> extends JsonDataManager<T> implements INetwork
         super(dataClass, pGson, directory, marker,onDataMapInit);
     }
 
-    public CommonDataManager(Class<T> dataClass, Gson pGson, String directory, String marker) {
-        super(dataClass, pGson, directory, marker);
-    }
-
-    public CommonDataManager(Class<T> dataClass, Gson pGson, FileToIdConverter fileToIdConverter, String marker) {
-        super(dataClass, pGson, fileToIdConverter, marker);
-    }
-
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
         super.apply(pObject, pResourceManager, pProfiler);
@@ -68,11 +60,7 @@ public class CommonDataManager<T> extends JsonDataManager<T> implements INetwork
             String element = entry.getValue();
             try {
                 T data = parseJson(id,element);
-                if (data != null) {
-                    if(data instanceof IresourceLocation rlData)
-                        rlData.setId(ExtractHelper.extractPureId(id));
-                    dataMap.put(id, data);
-                }
+                generateUnitData(id,data);
             } catch (JsonParseException | IllegalArgumentException e) {
                 DebugLogger.error(getMarker(), "Failed to load data file {} {}", id, e);
             }

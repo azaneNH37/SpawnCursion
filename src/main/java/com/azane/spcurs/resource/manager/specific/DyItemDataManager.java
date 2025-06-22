@@ -4,6 +4,7 @@ import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.debug.log.LogLv;
 import com.azane.spcurs.genable.item.base.IGenItemDatabase;
 import com.azane.spcurs.resource.manager.DynamicDataManager;
+import com.azane.spcurs.resource.manager.JsonDataManager;
 import com.azane.spcurs.resource.manager.JsonDataTypeManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -14,17 +15,18 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class DyItemDataManager<T extends IGenItemDatabase> extends DynamicDataManager<T>
 {
-    public DyItemDataManager(Class<T> dataClass, Gson pGson, String directory, String marker, JsonDataTypeManager manager)
+    public DyItemDataManager(Class<T> dataClass, Gson pGson, String directory, String marker, JsonDataTypeManager manager, Consumer<JsonDataManager<T>> onDataMapInit)
     {
-        super(dataClass, pGson, directory, marker,manager);
+        super(dataClass, pGson, directory, marker,manager, onDataMapInit);
     }
 
-    public DyItemDataManager(Class<T> dataClass, Gson pGson, FileToIdConverter fileToIdConverter, String marker,JsonDataTypeManager manager)
+    public DyItemDataManager(Class<T> dataClass, Gson pGson, FileToIdConverter fileToIdConverter, String marker,JsonDataTypeManager manager,Consumer<JsonDataManager<T>> onDataMapInit)
     {
-        super(dataClass, pGson, fileToIdConverter, marker,manager);
+        super(dataClass, pGson, fileToIdConverter, marker,manager, onDataMapInit);
     }
 
     /**

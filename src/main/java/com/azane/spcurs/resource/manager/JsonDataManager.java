@@ -22,8 +22,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /**
@@ -58,14 +56,6 @@ public class JsonDataManager<T> extends SimplePreparableReloadListener<Map<Resou
         this.onDataMapInit = onDataMapInit;
     }
 
-    public JsonDataManager(Class<T> dataClass, Gson pGson, String directory, String marker) {
-        this(dataClass, pGson, FileToIdConverter.json(directory), marker, dm -> {});
-    }
-
-    public JsonDataManager(Class<T> dataClass, Gson pGson, FileToIdConverter fileToIdConverter, String marker) {
-        this(dataClass,pGson,fileToIdConverter,marker,dm->{});
-    }
-
     @NotNull
     @Override
     protected Map<ResourceLocation, JsonElement> prepare(ResourceManager pResourceManager, ProfilerFiller pProfiler) {
@@ -82,17 +72,22 @@ public class JsonDataManager<T> extends SimplePreparableReloadListener<Map<Resou
             JsonElement element = entry.getValue();
             try {
                 T data = parseJson(id,element);
-                if (data != null) {
-                    if(data instanceof IresourceLocation rlData)
-                        rlData.setId(ExtractHelper.extractPureId(id));
-                    dataMap.put(id, data);
-                }
+                generateUnitData(id,data);
             } catch (JsonParseException | IllegalArgumentException e) {
                 DebugLogger.log(LogLv.ERROR, marker, "Failed to parse data file %s".formatted(id));
             }
         }
         onDataMapInit.accept(this);
         //debugLogAllData();
+    }
+
+    protected void generateUnitData(ResourceLocation id, T data)
+    {
+        if (data != null) {
+            if(data instanceof IresourceLocation rlData)
+                rlData.setId(ExtractHelper.extractPureId(id));
+            dataMap.put(id, data);
+        }
     }
 
     protected T parseJson(ResourceLocation rl, JsonElement element){ return ParserHelper.parseJsonStatic(gson,element,dataClass);}
