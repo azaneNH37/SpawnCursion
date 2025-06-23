@@ -45,6 +45,13 @@ public class SpawnConfig
             case create -> curSpawn >= createAmt;
         };
     }
+    public int expectedSpawnAmt()
+    {
+        return switch (strategy) {
+            case kill,limit -> killAmt;
+            case create -> createAmt;
+        };
+    }
 
     @Override
     public String toString()
