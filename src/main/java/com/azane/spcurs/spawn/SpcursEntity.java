@@ -41,6 +41,7 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
     @Getter
     private int finishedSpawns = 0;
 
+    @Getter
     private LinkedList<ScCreatureSpawnData> spawnDataList = new LinkedList<>();
 
     private SpcursEntity(@NotNull ResourceLocation rl)
@@ -56,7 +57,7 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
         SpcursEntity entity = new SpcursEntity(rl);
         if(tag == null)
         {
-            ServerDataService.get().getSpawner(rl).getCreatures().entrySet()
+            entity.getScSpawner().getCreatures().entrySet()
                 .forEach(entry-> entity.insertToSpawnList(new ScCreatureSpawnData(entry.getKey(), entry.getValue()))
                 );
         }

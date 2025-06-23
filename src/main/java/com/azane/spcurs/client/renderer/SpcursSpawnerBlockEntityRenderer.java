@@ -73,12 +73,12 @@ public class SpcursSpawnerBlockEntityRenderer implements BlockEntityRenderer<Spc
             colors[1]/255f, colors[2]/255f, colors[3]/255f, 1.0f
         );
 
-        FaceLocalPlayerStack.push(poseStack, pos, new Vec3(0.5, 3, 0.5));
+        FaceLocalPlayerStack.push(poseStack, pos, new Vec3(0, 3, 0));
 
-        DebugLogger.logReduced("render","spawn:{} kill:{}",pBlockEntity.getDisplay().getSpawnProgress(),pBlockEntity.getDisplay().getKillProgress());
+        //DebugLogger.logReduced("render","spawn:{} kill:{}",pBlockEntity.getDisplay().getSpawnProgress(),pBlockEntity.getDisplay().getKillProgress());
         SimpleProgressBarRenderer.renderProgressBar(poseStack, pBuffer,
             LightTexture.FULL_BRIGHT, pPackedOverlay,
-            new Vec3(0,0,0), 7f, 1f,
+            new Vec3(0,0,0), 7f, 0.4f,
             pBlockEntity.getDisplay().getSpawnProgress(),
             pBlockEntity.getDisplay().getKillProgress()
         );

@@ -2,6 +2,7 @@ package com.azane.spcurs.network;
 
 import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.network.to_client.SyncGlobalDatapackPacket;
+import com.azane.spcurs.network.to_client.SyncScDisplayPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.simple.SimpleChannel;
 
@@ -21,5 +22,6 @@ public class OgnmChannel extends BasePacketHandler
     public void initialize()
     {
         registerServerToClient(SyncGlobalDatapackPacket.class,SyncGlobalDatapackPacket::new);
+        registerServerToClient(SyncScDisplayPacket.class, SyncScDisplayPacket::new);
     }
 }

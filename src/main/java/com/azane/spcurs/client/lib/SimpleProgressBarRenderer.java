@@ -1,6 +1,7 @@
 package com.azane.spcurs.client.lib;
 
 import com.azane.spcurs.SpcursMod;
+import com.azane.spcurs.debug.log.DebugLogger;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -40,19 +41,20 @@ public class SimpleProgressBarRenderer
         // 背景条
         renderProgressQuad(matrix, normal, consumer,
             -barWidth/2, -barHeight/2, 0,
-            barWidth/2, barHeight/2, 0.02f,
-            0xFFCCCCCC, // 灰色背景
+            barWidth/2, barHeight/2, 0.01f,
+            0xFFAAAAAA, // 灰色背景
             packedLight, packedOverlay);
 
         int layer = 0;
         for(float progress : progresses)
         {
+            DebugLogger.log("{},{}",layer,progress);
             float filledWidth = barWidth * progress;
             if (progress > 0) {
                 renderProgressQuad(matrix, normal, consumer,
-                    -barWidth/2, -barHeight/2, 0.02f,
-                    -barWidth/2 + filledWidth, barHeight/2, 0.02f * 2,
-                    COLOR_BAR[layer & COLOR_BAR.length],
+                    -barWidth/2, -barHeight/2, 0.01f*(layer+1),
+                    -barWidth/2 + filledWidth, barHeight/2, 0.01f *(layer+2),
+                    COLOR_BAR[layer % COLOR_BAR.length],
                     packedLight, packedOverlay);
             }
             layer++;

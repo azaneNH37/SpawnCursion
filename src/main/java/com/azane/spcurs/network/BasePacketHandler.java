@@ -1,8 +1,12 @@
 package com.azane.spcurs.network;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
@@ -43,6 +47,10 @@ public abstract class BasePacketHandler
 
     public <MSG> void sendToAll(MSG message) {
         getChannel().send(PacketDistributor.ALL.noArg(), message);
+    }
+
+    public <MSG> void sendToWithinRange(MSG message, ServerLevel level, BlockPos pos, float range) {
+        getChannel().send(PacketDistributor.NEAR.with(()-> new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), range,level.dimension())), message);
     }
 
     public <MSG> void sendTo(MSG message, ServerPlayer player) {
