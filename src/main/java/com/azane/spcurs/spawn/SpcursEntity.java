@@ -1,14 +1,20 @@
 package com.azane.spcurs.spawn;
 
+import com.azane.spcurs.block.EraserBlock;
+import com.azane.spcurs.block.WrapperBlock;
 import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.genable.data.sc.ScCreature;
 import com.azane.spcurs.genable.data.sc.ScSpawner;
+import com.azane.spcurs.registry.ModBlock;
 import com.azane.spcurs.resource.service.ServerDataService;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
@@ -109,16 +115,35 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
                     finishedSpawns++;
                 }
                 insertToSpawnList(cache);
-                checkSpawnEnd();
+                checkSpawnEnd(level,pos);
             }
         }
     }
 
-    private void checkSpawnEnd()
+    private void checkSpawnEnd(ServerLevel pLevel,BlockPos pPos)
     {
         if(finishedSpawns < spawnDataList.size())
             return;
         DebugLogger.info(MARKER,"SpcursEntity " + spawnerID + " finished all spawns.");
+        for(int dx = -1; dx <= 1; dx++)
+        {
+            for(int dz = -1; dz <= 1; dz++)
+            {
+                BlockPos offsetPos = pPos.offset(dx, 2, dz);
+                BlockState state = ModBlock.ERASER.block.get().defaultBlockState();
+                if(dx == 0 && dz == 0)
+                    state = state.setValue(WrapperBlock.HEIGHT,2);
+                pLevel.setBlock(offsetPos, state,3);
+            }
+        }
+        BlockPos chestPos = pPos.below();
+        pLevel.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 3);
+        if (pLevel.getBlockEntity(chestPos) instanceof ChestBlockEntity chest) {
+            chest.setLootTable(
+                getScSpawner().getLootTable(),
+                pLevel.getRandom().nextLong()
+            );
+        }
     }
 
     private void updateActive(ServerLevel level,BlockPos blockPos)

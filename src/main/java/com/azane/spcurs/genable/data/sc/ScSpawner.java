@@ -8,24 +8,24 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.resources.ResourceLocation;
 
+@Getter
 public class ScSpawner implements IresourceLocation
 {
     @Expose(serialize = false, deserialize = false)
-    @Getter
     @Setter
     private ResourceLocation id;
 
     @SerializedName("creatures")
-    @Getter
     private ScCreatures creatures;
 
     @SerializedName("active_range")
-    @Getter
     private double activeRange = 64.0D;
 
     @SerializedName("display")
-    @Getter
     private ScDisplayContext displayContext = new ScDisplayContext();
+
+    @SerializedName("loot_table")
+    private ResourceLocation lootTable = ResourceLocation.parse("chests/ancient_city");
 
     @Override
     public String toString()
