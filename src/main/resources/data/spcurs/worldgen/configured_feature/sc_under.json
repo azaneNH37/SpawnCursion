@@ -1,0 +1,9 @@
+{
+  "type": "spcurs:sc_spawner",
+  "config": {
+    "spawner": "spcurs:sc_under",
+    "base":[{"Name":"deepslate"}, {"Name":"deepslate_bricks"}, {"Name":"deepslate_tiles"}, {"Name":"cobbled_deepslate"}, {"Name":"cracked_deepslate_bricks"}, {"Name":"cracked_deepslate_tiles"}],
+    "carpet": [{"Name":"deepslate_brick_slab"}, {"Name":"deepslate_tile_slab"}],
+    "column": [{"Name":"deepslate"}, {"Name":"deepslate_bricks"}, {"Name":"deepslate_tiles"}, {"Name":"cobbled_deepslate"}, {"Name":"cracked_deepslate_bricks"}, {"Name":"cracked_deepslate_tiles"}]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "feature": "spcurs:sc_lv1",
+  "placement": [
+    {
+      "type": "minecraft:count_on_every_layer",
+      "count": 1
+    },
+    {
+      "type": "rarity_filter",
+      "chance": 140
+    },
+    {
+      "type": "heightmap",
+      "heightmap":"MOTION_BLOCKING_NO_LEAVES"
+    },
+    {
+      "type": "block_predicate_filter",
+      "predicate": {
+        "type": "solid",
+        "offset": [0,-1,0]
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

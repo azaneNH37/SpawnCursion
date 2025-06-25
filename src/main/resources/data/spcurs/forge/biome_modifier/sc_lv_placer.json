@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": ["spcurs:sc_lv1","spcurs:sc_lv2","spcurs:sc_lv3"],
+  "step": "vegetal_decoration"
+}

@@ -7,7 +7,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public interface IEnterScSpawner
 {
-    ResourceLocation getScSpawnerID(ServerLevel level, BlockPos pos, BlockState state);
+    @FunctionalInterface
+    interface ScSpawnerGen{
+        ResourceLocation getSpawnerID(ServerLevel level, BlockPos pos, BlockState state);
+    }
 
-    void doScSpawnerReplacement(ServerLevel level, BlockPos pos,BlockState state);
+    void setBaseSpawnerID(ResourceLocation rl);
+
+    void doScSpawnerReplacement(ServerLevel level, BlockPos pos,BlockState state,ScSpawnerGen gen);
 }

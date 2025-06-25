@@ -19,7 +19,7 @@ public class WrapperBlock extends Block
 
     public WrapperBlock()
     {
-        super(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(-1).explosionResistance(3600000).noOcclusion().lightLevel(state->15));
+        super(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(-1).explosionResistance(3600000).noOcclusion().lightLevel(state->15));
         this.registerDefaultState(this.stateDefinition.any().setValue(HEIGHT,2));
     }
 

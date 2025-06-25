@@ -1,0 +1,27 @@
+{
+  "type": "spcurs:sc_spawner",
+  "config": {
+    "spawner": "spcurs:sc_lv2",
+    "base": [
+      {
+        "Name":"diorite"
+      },
+      {
+        "Name":"polished_diorite"
+      }],
+    "carpet" : [
+      {
+        "Name":"diorite_slab"
+      },
+      {
+        "Name":"polished_diorite_slab"
+      }],
+    "column":[
+      {
+        "Name":"diorite"
+      },
+      {
+        "Name":"polished_diorite"
+      }]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": ["badlands", "eroded_badlands", "wooded_badlands", "minecraft:desert"],
+  "features": "spcurs:sc_desert",
+  "step": "vegetal_decoration"
+}

@@ -5,6 +5,7 @@ import com.azane.spcurs.network.OgnmChannel;
 import com.azane.spcurs.registry.ModBlock;
 import com.azane.spcurs.registry.ModBlockEntity;
 import com.azane.spcurs.registry.ModItem;
+import com.azane.spcurs.registry.ModWorldGen;
 import com.azane.spcurs.resource.service.JsonTypeManagers;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -33,6 +34,7 @@ public class SpcursMod
         ModBlock.BLOCKS.register(modEventBus);
         ModItem.ITEMS.register(modEventBus);
         ModBlockEntity.BLOCK_ENTITIES.register(modEventBus);
+        ModWorldGen.FEATURES.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 

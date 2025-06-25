@@ -1,0 +1,9 @@
+{
+  "type": "spcurs:sc_spawner",
+  "config": {
+    "spawner": "spcurs:sc_lv3",
+    "base": [],
+    "carpet" : [],
+    "column": []
+  }
+}

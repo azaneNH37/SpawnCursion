@@ -43,9 +43,9 @@ public class ScCreature implements IresourceLocation
     @SerializedName("creature")
     private ResourceLocation creature;
     @SerializedName("spawn_config")
-    private SpawnConfig spawnConfig;
+    private SpawnConfig spawnConfig = new SpawnConfig();
     @SerializedName("effects")
-    private ScEffects effects;
+    private ScEffects effects = new ScEffects();
 
     public void spawn(ServerLevel level, BlockPos centre, ScSpawner scSpawner, ScCreatureSpawnData spawnData)
     {

@@ -13,7 +13,7 @@ public class ScCreatures
 {
     @SerializedName("set")
     @Getter
-    private LinkedHashMap<ResourceLocation, ScCreature> set;
+    private LinkedHashMap<ResourceLocation, ScCreature> set = new LinkedHashMap<>();
 
     public Set<Map.Entry<ResourceLocation, ScCreature>> entrySet()
     {

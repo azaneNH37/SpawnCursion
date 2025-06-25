@@ -1,0 +1,39 @@
+{
+  "type": "spcurs:sc_spawner",
+  "config": {
+    "spawner": "spcurs:sc_desert",
+    "base": [
+      {
+        "Name":"sandstone"
+      },
+      {
+        "Name":"chiseled_sandstone"
+      },
+      {
+        "Name":"cut_sandstone"
+      },
+      {
+        "Name":"smooth_sandstone"
+      }],
+    "carpet" : [
+      {
+        "Name":"sandstone_slab"
+      },
+      {
+        "Name":"cut_sandstone_slab"
+      }],
+    "column": [
+      {
+        "Name":"sandstone"
+      },
+      {
+        "Name":"chiseled_sandstone"
+      },
+      {
+        "Name":"cut_sandstone"
+      },
+      {
+        "Name":"smooth_sandstone"
+      }]
+  }
+}

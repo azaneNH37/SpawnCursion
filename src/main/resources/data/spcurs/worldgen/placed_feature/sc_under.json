@@ -1,0 +1,21 @@
+{
+  "feature": "spcurs:sc_under",
+  "placement": [
+    {
+      "type": "minecraft:count_on_every_layer",
+      "count": 3
+    },
+    {
+      "type": "rarity_filter",
+      "chance": 80
+    },
+    {
+      "type":"surface_relative_threshold_filter",
+      "heightmap": "MOTION_BLOCKING_NO_LEAVES",
+      "max_inclusive": -20
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

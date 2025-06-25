@@ -1,0 +1,23 @@
+{
+  "type": "spcurs:sc_spawner",
+  "config": {
+    "spawner": "spcurs:sc_lv1",
+    "base": [
+      {
+        "Name":"mossy_cobblestone"
+      },{
+        "Name":"mossy_stone_bricks"
+      }],
+    "carpet" : [{
+        "Name":"mossy_cobblestone_slab"
+      },{
+        "Name":"mossy_stone_brick_slab"
+      }],
+    "column":[
+      {
+        "Name":"mossy_cobblestone"
+      },{
+        "Name":"mossy_stone_bricks"
+      }]
+  }
+}

@@ -2,6 +2,7 @@ package com.azane.spcurs.registry;
 
 import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.block.entity.SpcursSpawnerBlockEntity;
+import com.azane.spcurs.block.entity.TransformScEntity;
 import com.mojang.datafixers.DSL;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -19,4 +20,11 @@ public class ModBlockEntity
             ModBlock.SPAWNER.block.get()
         ).build(DSL.remainderType())
     );
+    public static final RegistryObject<BlockEntityType<TransformScEntity>> TRANS_SC_ENTITY =
+        BLOCK_ENTITIES.register("trans_sc", () ->
+            BlockEntityType.Builder.of(
+                TransformScEntity::new,
+                ModBlock.LOADER.block.get()
+            ).build(DSL.remainderType())
+        );
 }

@@ -16,7 +16,7 @@ public class ScSpawner implements IresourceLocation
     private ResourceLocation id;
 
     @SerializedName("creatures")
-    private ScCreatures creatures;
+    private ScCreatures creatures = new ScCreatures();
 
     @SerializedName("active_range")
     private double activeRange = 64.0D;

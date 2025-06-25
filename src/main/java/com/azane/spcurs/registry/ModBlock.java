@@ -1,10 +1,7 @@
 package com.azane.spcurs.registry;
 
 import com.azane.spcurs.SpcursMod;
-import com.azane.spcurs.block.EraserBlock;
-import com.azane.spcurs.block.SpcursSpawnerBlock;
-import com.azane.spcurs.block.TransformSpawnBlock;
-import com.azane.spcurs.block.WrapperBlock;
+import com.azane.spcurs.block.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -21,6 +18,7 @@ public class ModBlock
     public static final ItemBlock SPAWNER = registerBlockItem("spawner", SpcursSpawnerBlock::new,new Item.Properties().stacksTo(1));
     public static final ItemBlock WRAPPER = registerBlockItem("wrapper", WrapperBlock::new);
     public static final ItemBlock ERASER = registerBlockItem("eraser", EraserBlock::new);
+    public static final ItemBlock LOADER = registerBlockItem("loader", LoadSpawnBlock::new);
 
     public static final ItemBlock TRANSFORMER = registerBlockItem("transformer", TransformSpawnBlock::new);
     //public static final ItemBlock DEBUG_STATE = registerBlockItem("debug_state_change", StateChangeBlock::new);
