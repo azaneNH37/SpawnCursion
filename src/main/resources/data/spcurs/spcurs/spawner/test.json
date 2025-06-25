@@ -2,7 +2,10 @@
   "active_range": 32,
   "display": {
     "img": "spcurs:spawner/port",
-    "render_color": 16711680
+    "entity_color": 16711680,
+    "head_color": 9746258,
+    "leg_color": 8941201,
+    "name": "spcurs.sc.spawner.test"
   },
   "creatures": {
     "set": {

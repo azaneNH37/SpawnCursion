@@ -6,9 +6,7 @@ import com.azane.spcurs.genable.data.ScGson;
 import com.azane.spcurs.genable.data.sc.ScSpawner;
 import com.azane.spcurs.genable.tag.ScSpawnerTag;
 import com.azane.spcurs.resource.manager.CommonDataManager;
-import com.azane.spcurs.resource.manager.DynamicDataManager;
 import com.azane.spcurs.resource.manager.INetworkCacheReloadListener;
-import com.azane.spcurs.resource.manager.JsonDataTypeManager;
 import com.azane.spcurs.resource.manager.specific.TagLikeDataManager;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.resources.ResourceLocation;
@@ -59,10 +57,11 @@ public abstract class CommonDataService implements IResourceProvider
        //实例化全局数据
         spawners = new CommonDataManager<>(ScSpawner.class, ScGson.INSTANCE.GSON, "spcurs/spawner","SpcursSpawner",jm->{
             jm.getAllData().forEach((id, spawner) -> {
+                spawner.registerDataBase();
                 spawner.getCreatures().getSet().forEach((rid, creature) -> creature.setId(rid));
-                int raw_color = spawner.getDisplayContext().getRenderColor();
+                int raw_color = spawner.getDisplayContext().getEntityColor();
                 raw_color &= 0xFFFFFFFF;
-                spawner.getDisplayContext().setRenderColor((raw_color & 0xFF000000) == 0 ? (raw_color | 0xFF000000) : raw_color);
+                spawner.getDisplayContext().setEntityColor((raw_color & 0xFF000000) == 0 ? (raw_color | 0xFF000000) : raw_color);
             });
             jm.debugLogAllData();
         });

@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Objects;
@@ -29,6 +30,7 @@ public interface IPolyItemDataBase<T extends IresourceLocation>
         throw new ClassCastException("Cannot cast to " + type.getName());
     }
 
+    @Nullable
     default T getDataBaseForStack(ItemStack itemStack)
     {
         try {
@@ -48,7 +50,8 @@ public interface IPolyItemDataBase<T extends IresourceLocation>
         } catch (Exception e) {
             DebugLogger.log(LogLv.ERROR, POLY_ITEM_DATABASE, "Error getting database for stack: " + e.getMessage());
         }
-        throw new IllegalArgumentException("ItemStack is not a valid GenItem: " + itemStack);
+        return null;
+        //throw new IllegalArgumentException("ItemStack is not a valid GenItem: " + itemStack);
     }
 
     default void registerDataBase(T dataBase)

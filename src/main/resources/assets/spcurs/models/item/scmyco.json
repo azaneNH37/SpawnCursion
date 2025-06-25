@@ -1,0 +1,8 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "spcurs:item/spawner_line",
+    "layer1": "spcurs:item/spawner_head",
+    "layer2": "spcurs:item/spawner_leg"
+  }
+}

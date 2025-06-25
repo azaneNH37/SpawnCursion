@@ -4,13 +4,11 @@ import com.azane.spcurs.block.entity.SpcursSpawnerBlockEntity;
 import com.azane.spcurs.client.lib.CubeFrameRenderer;
 import com.azane.spcurs.client.lib.FaceLocalPlayerStack;
 import com.azane.spcurs.client.lib.SimpleProgressBarRenderer;
-import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.genable.data.sc.ScSpawner;
 import com.azane.spcurs.resource.service.ClientDataService;
 import com.azane.spcurs.spawn.SpcursEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,14 +18,9 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
-
-import java.util.Random;
 
 @OnlyIn(Dist.CLIENT)
 public class SpcursSpawnerBlockEntityRenderer implements BlockEntityRenderer<SpcursSpawnerBlockEntity>
@@ -44,7 +37,7 @@ public class SpcursSpawnerBlockEntityRenderer implements BlockEntityRenderer<Spc
         ScSpawner spawner = ClientDataService.get().getSpawner(entity.getSpawnerID());
         ResourceLocation texture = spawner.getDisplayContext().getImgRl();
         texture = ResourceLocation.tryBuild(texture.getNamespace(),"textures/"+texture.getPath()+".png");
-        int color = spawner.getDisplayContext().getRenderColor();
+        int color = spawner.getDisplayContext().getEntityColor();
         BlockPos pos = pBlockEntity.getBlockPos();
         Vec3 centre = new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
         float size = 3.2f; // 立方体的大小
