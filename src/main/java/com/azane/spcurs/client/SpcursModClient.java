@@ -1,6 +1,7 @@
 package com.azane.spcurs.client;
 
 import com.azane.spcurs.SpcursMod;
+import com.azane.spcurs.client.renderer.CasinoBlockEntityRenderer;
 import com.azane.spcurs.client.renderer.SpcursSpawnerBlockEntityRenderer;
 import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.item.ScMycoItem;
@@ -25,6 +26,7 @@ public class SpcursModClient
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             BlockEntityRenderers.register(ModBlockEntity.SPCURS_SPAWNER_ENTITY.get(), SpcursSpawnerBlockEntityRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntity.CASINO_ENTITY.get(), CasinoBlockEntityRenderer::new);
         });
     }
 

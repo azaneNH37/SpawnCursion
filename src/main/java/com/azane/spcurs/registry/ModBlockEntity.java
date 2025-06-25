@@ -1,8 +1,10 @@
 package com.azane.spcurs.registry;
 
 import com.azane.spcurs.SpcursMod;
+import com.azane.spcurs.block.entity.CasinoBlockEntity;
 import com.azane.spcurs.block.entity.SpcursSpawnerBlockEntity;
 import com.azane.spcurs.block.entity.TransformScEntity;
+import com.azane.spcurs.genable.data.sc.collection.ScCreatures;
 import com.mojang.datafixers.DSL;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -25,6 +27,13 @@ public class ModBlockEntity
             BlockEntityType.Builder.of(
                 TransformScEntity::new,
                 ModBlock.LOADER.block.get()
+            ).build(DSL.remainderType())
+        );
+    public static final RegistryObject<BlockEntityType<CasinoBlockEntity>> CASINO_ENTITY =
+        BLOCK_ENTITIES.register("casino",()->
+            BlockEntityType.Builder.of(
+                CasinoBlockEntity::new,
+                ModBlock.CASINO.block.get()
             ).build(DSL.remainderType())
         );
 }

@@ -44,15 +44,6 @@ public class TransformScEntity extends BlockEntity implements IEnterScSpawner
     }
 
     @Override
-    public void doScSpawnerReplacement(ServerLevel level, BlockPos pos, BlockState state, ScSpawnerGen gen)
-    {
-        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-        BlockPos newPos = pos.above();
-        level.setBlock(newPos, ModBlock.SPAWNER.block.get().defaultBlockState(), 3);
-        SpcursSpawnerBlockEntity.setSpawner(level,newPos,gen.getSpawnerID(level, newPos, state));
-    }
-
-    @Override
     public void load(CompoundTag pTag)
     {
         super.load(pTag);

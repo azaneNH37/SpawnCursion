@@ -49,7 +49,7 @@ public class TransformSpawnBlock extends Block implements IEnterScSpawner
     @Override
     public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston)
     {
-        //pLevel.scheduleTick(pPos, this, 20);
+        pLevel.scheduleTick(pPos, this, 10);
     }
 
     @Override

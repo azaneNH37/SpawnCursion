@@ -4,6 +4,7 @@ import com.azane.spcurs.genable.data.sc.ScSpawner;
 import com.azane.spcurs.genable.item.base.IGenItem;
 import com.azane.spcurs.genable.item.base.IPolyItemDataBase;
 import com.azane.spcurs.resource.service.ServerDataService;
+import com.azane.spcurs.util.ScTags;
 import lombok.Getter;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
@@ -43,6 +44,17 @@ public class ScMycoItem extends Item implements IPolyItemDataBase<ScSpawner>, IG
             return dataBase.getDisplayContext().getItemColor(tintIndex);
         }
         return 0x000000; // Default color if no database found
+    }
+
+    public ResourceLocation getScSpawnerID(ItemStack itemStack) {
+        if (!isDataBaseForStack(itemStack)) {
+            return ScTags.DEFAULT_SC;
+        }
+        ScSpawner dataBase = getDataBaseForStack(itemStack);
+        if (dataBase != null) {
+            return dataBase.getId();
+        }
+        return ScTags.DEFAULT_SC;
     }
 
     public static NonNullList<ItemStack> fillCreativeTab() {
