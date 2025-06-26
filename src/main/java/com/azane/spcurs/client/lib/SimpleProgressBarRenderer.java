@@ -1,6 +1,7 @@
 package com.azane.spcurs.client.lib;
 
 import com.azane.spcurs.SpcursMod;
+import com.azane.spcurs.lib.RlHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,7 +16,7 @@ import org.joml.Matrix4f;
 @OnlyIn(Dist.CLIENT)
 public class SimpleProgressBarRenderer
 {
-    public static final ResourceLocation TEXTURE = ResourceLocation.tryBuild(SpcursMod.MOD_ID,"textures/gui/blank.png");
+    public static final ResourceLocation TEXTURE = RlHelper.build(SpcursMod.MOD_ID,"textures/gui/blank.png");
     public static final int[] COLOR_BAR = new int[]{
         0xFF0000FF, // 蓝色
         0xFF00FF00, // 绿色

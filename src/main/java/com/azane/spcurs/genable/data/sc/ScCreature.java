@@ -4,6 +4,7 @@ import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.genable.data.SpawnConfig;
 import com.azane.spcurs.genable.data.sc.collection.ScEffects;
 import com.azane.spcurs.lib.IComponentDisplay;
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.resource.helper.IresourceLocation;
 import com.azane.spcurs.spawn.IScSpawner;
 import com.azane.spcurs.spawn.ScCreatureSpawnData;
@@ -127,7 +128,7 @@ public class ScCreature implements IresourceLocation, IComponentDisplay
             DebugLogger.warn(MARKER,"ScCreature feedback level mismatch: expected " + level + ", got " + levelName);
             return;
         }
-        ResourceLocation creatureId = ResourceLocation.parse(data.getString("ScCreature"));
+        ResourceLocation creatureId = RlHelper.parse(data.getString("ScCreature"));
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if(blockEntity instanceof IScSpawner scBlockEntity)
         {

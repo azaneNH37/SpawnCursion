@@ -2,6 +2,7 @@ package com.azane.spcurs.spawn;
 
 import com.azane.spcurs.genable.data.SpawnConfig;
 import com.azane.spcurs.genable.data.sc.ScCreature;
+import com.azane.spcurs.lib.RlHelper;
 import lombok.Getter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -79,7 +80,7 @@ public class ScCreatureSpawnData implements INBTSerializable<CompoundTag>
     @Override
     public void deserializeNBT(CompoundTag nbt)
     {
-        scCreatureRl = ResourceLocation.tryParse(nbt.getString("scCreatureRl"));
+        scCreatureRl = RlHelper.parse(nbt.getString("scCreatureRl"));
         if (scCreatureRl == null) {
             throw new IllegalArgumentException("Invalid ResourceLocation: " + nbt.getString("scCreatureRl"));
         }

@@ -5,6 +5,7 @@ import com.azane.spcurs.client.lib.CubeFrameRenderer;
 import com.azane.spcurs.client.lib.FaceLocalPlayerStack;
 import com.azane.spcurs.client.lib.SimpleProgressBarRenderer;
 import com.azane.spcurs.genable.data.sc.ScSpawner;
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.resource.service.ClientDataService;
 import com.azane.spcurs.spawn.SpcursEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -36,7 +37,7 @@ public class SpcursSpawnerBlockEntityRenderer implements BlockEntityRenderer<Spc
             return;
         ScSpawner spawner = ClientDataService.get().getSpawner(entity.getSpawnerID());
         ResourceLocation texture = spawner.getDisplayContext().getImgRl();
-        texture = ResourceLocation.tryBuild(texture.getNamespace(),"textures/"+texture.getPath()+".png");
+        texture = RlHelper.build(texture.getNamespace(),"textures/"+texture.getPath()+".png");
         int color = spawner.getDisplayContext().getEntityColor();
         BlockPos pos = pBlockEntity.getBlockPos();
         Vec3 centre = new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);

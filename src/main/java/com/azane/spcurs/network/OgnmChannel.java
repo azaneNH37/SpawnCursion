@@ -1,6 +1,7 @@
 package com.azane.spcurs.network;
 
 import com.azane.spcurs.SpcursMod;
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.network.to_client.SyncCasinoPacket;
 import com.azane.spcurs.network.to_client.SyncGlobalDatapackPacket;
 import com.azane.spcurs.network.to_client.SyncScDisplayPacket;
@@ -13,7 +14,7 @@ public class OgnmChannel extends BasePacketHandler
 
     private OgnmChannel(){}
 
-    private final SimpleChannel CHANNEL = createChannel(ResourceLocation.tryBuild(SpcursMod.MOD_ID,"main"),"1.0");
+    private final SimpleChannel CHANNEL = createChannel(RlHelper.build(SpcursMod.MOD_ID,"main"),"1.0");
 
     public SimpleChannel getChannel()
     {

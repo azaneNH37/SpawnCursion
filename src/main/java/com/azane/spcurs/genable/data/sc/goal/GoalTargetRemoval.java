@@ -3,6 +3,7 @@ package com.azane.spcurs.genable.data.sc.goal;
 import com.azane.cjsop.annotation.JsonClassTypeBinder;
 import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.genable.data.ISpcursPlugin;
+import com.azane.spcurs.lib.RlHelper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class GoalTargetRemoval implements ISpcursPlugin,IPersistantGoal
 {
     @Getter
     @Expose(serialize = false,deserialize = false)
-    public final ResourceLocation goalType = ResourceLocation.fromNamespaceAndPath(SpcursMod.MOD_ID, "goal.target.rm");
+    public final ResourceLocation goalType = RlHelper.build(SpcursMod.MOD_ID, "goal.target.rm");
 
     @SerializedName("hurt")
     private boolean hurt = false;

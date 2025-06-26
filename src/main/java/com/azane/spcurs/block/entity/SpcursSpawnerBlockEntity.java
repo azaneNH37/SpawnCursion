@@ -2,6 +2,7 @@ package com.azane.spcurs.block.entity;
 
 import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.genable.data.sc.collection.ScEffects;
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.network.OgnmChannel;
 import com.azane.spcurs.network.to_client.SyncScDisplayPacket;
 import com.azane.spcurs.registry.ModBlockEntity;
@@ -93,7 +94,7 @@ public class SpcursSpawnerBlockEntity extends BlockEntity implements IScSpawner
             CompoundTag ctag = null;
             if(pTag.contains("spawner"))
                 ctag = pTag.getCompound("spawner");
-            this.spawner = SpcursEntity.create(ResourceLocation.parse(pTag.getString("spawnerID")), ctag, null,this.getLevel() == null || this.getLevel().isClientSide());
+            this.spawner = SpcursEntity.create(RlHelper.parse(pTag.getString("spawnerID")), ctag, null,this.getLevel() == null || this.getLevel().isClientSide());
         }
         else
             this.spawner = null;

@@ -3,6 +3,7 @@ package com.azane.spcurs.genable.data.sc.goal;
 import com.azane.spcurs.genable.data.ISpcursPlugin;
 import com.azane.spcurs.genable.data.ScGson;
 import com.azane.spcurs.lib.GsonExtra;
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.resource.helper.ParserHelper;
 import com.azane.spcurs.resource.service.JsonTypeManagers;
 import com.google.gson.Gson;
@@ -58,7 +59,7 @@ public final class GoalPersistantHelper
         int cnt = goalData.getInt("cnt");
         for(int i = 0; i < cnt; i++)
         {
-            ResourceLocation goalType = ResourceLocation.parse(goalData.getString("goalType%d".formatted(i)));
+            ResourceLocation goalType = RlHelper.parse(goalData.getString("goalType%d".formatted(i)));
             String goalJson = goalData.getString("goal%d".formatted(i));
             ParserHelper.parseJsonDynamic(ScGson.INSTANCE.GSON,goalJson, ISpcursPlugin.class,goalType, JsonTypeManagers.modTypeManager).onEntityCreate(level, pos, mob);
         }

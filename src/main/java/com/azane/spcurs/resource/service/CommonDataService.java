@@ -5,6 +5,7 @@ import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.genable.data.ScGson;
 import com.azane.spcurs.genable.data.sc.ScSpawner;
 import com.azane.spcurs.genable.tag.ScSpawnerTag;
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.resource.manager.CommonDataManager;
 import com.azane.spcurs.resource.manager.INetworkCacheReloadListener;
 import com.azane.spcurs.resource.manager.specific.TagLikeDataManager;
@@ -76,7 +77,7 @@ public abstract class CommonDataService implements IResourceProvider
 
     private <T extends INetworkCacheReloadListener> void register(T listener,String rl, ImmutableMap.Builder<ResourceLocation, INetworkCacheReloadListener> builder)
     {
-        builder.put(Objects.requireNonNull(ResourceLocation.tryBuild(SpcursMod.MOD_ID, rl)),listener);
+        builder.put(Objects.requireNonNull(RlHelper.build(SpcursMod.MOD_ID, rl)),listener);
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.azane.spcurs.genable.tag;
 
 import com.azane.spcurs.SpcursMod;
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.resource.helper.ITagLike;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import java.util.Set;
 
 public class ScSpawnerTag implements ITagLike<ResourceLocation>
 {
-    public static final ResourceLocation DEFAULT_ID = ResourceLocation.fromNamespaceAndPath(SpcursMod.MOD_ID,"default");
+    public static final ResourceLocation DEFAULT_ID = RlHelper.build(SpcursMod.MOD_ID,"default");
 
     @Getter
     @SerializedName("values")

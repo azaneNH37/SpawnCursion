@@ -1,5 +1,6 @@
 package com.azane.spcurs.block.entity;
 
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.registry.ModBlock;
 import com.azane.spcurs.registry.ModBlockEntity;
 import com.azane.spcurs.spawn.IEnterScSpawner;
@@ -48,7 +49,7 @@ public class TransformScEntity extends BlockEntity implements IEnterScSpawner
     {
         super.load(pTag);
         if (pTag.contains("BaseSpawnerID")) {
-            this.baseSpawnerID = ResourceLocation.tryParse(pTag.getString("BaseSpawnerID"));
+            this.baseSpawnerID = RlHelper.parse(pTag.getString("BaseSpawnerID"));
         } else {
             this.baseSpawnerID = null; // Default to null if not present
         }

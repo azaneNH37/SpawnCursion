@@ -5,6 +5,7 @@ import com.azane.spcurs.genable.data.sc.effects.EfcAttrModifier;
 import com.azane.spcurs.genable.data.sc.goal.GoalTargetRemoval;
 import com.azane.spcurs.genable.data.sc.goal.GoalTargetScCreature;
 import com.azane.spcurs.item.ScMycoItem;
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.network.OgnmChannel;
 import com.azane.spcurs.network.to_client.SyncCasinoPacket;
 import com.azane.spcurs.registry.ModBlockEntity;
@@ -66,7 +67,7 @@ public class CasinoBlockEntity extends BlockEntity
                 IEnterScSpawner.placeScSpawner(level,pos,state,(plevel, ppos, pstate)-> scMycoItem.getScSpawnerID(stack),
                     ()-> new ScEffects.Builder()
                         .add("spcurs:efc.attr-tmp",
-                            EfcAttrModifier.of(ResourceLocation.parse("generic.follow_range"), AttributeModifier.Operation.ADDITION,64.0D,null,null))
+                            EfcAttrModifier.of(RlHelper.parse("generic.follow_range"), AttributeModifier.Operation.ADDITION,64.0D,null,null))
                         .add("spcurs:goal.target.rm-tmp",
                             GoalTargetRemoval.of(true,true))
                         .add("spcurs:goal.target.scc-tmp",

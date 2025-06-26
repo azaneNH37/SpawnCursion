@@ -7,6 +7,7 @@ import com.azane.spcurs.genable.data.ScGson;
 import com.azane.spcurs.genable.data.sc.ScCreature;
 import com.azane.spcurs.genable.data.sc.ScSpawner;
 import com.azane.spcurs.genable.data.sc.collection.ScEffects;
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.registry.ModBlock;
 import com.azane.spcurs.resource.service.IResourceProvider;
 import com.azane.spcurs.resource.service.ServerDataService;
@@ -243,9 +244,9 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
         spawnDataList.clear();
         for (int i = 0; i < spawnDataCount; i++) {
             ScCreatureSpawnData spawnData = new ScCreatureSpawnData(
-                ResourceLocation.tryParse(nbt.getCompound("spawnData_" + i).getString("scCreatureRl")),
+                RlHelper.parse(nbt.getCompound("spawnData_" + i).getString("scCreatureRl")),
                 getScSpawner().getCreatures()
-                    .get(ResourceLocation.tryParse(nbt.getCompound("spawnData_" + i).getString("scCreatureRl")))
+                    .get(RlHelper.parse(nbt.getCompound("spawnData_" + i).getString("scCreatureRl")))
             );
             spawnData.deserializeNBT(nbt.getCompound("spawnData_" + i));
             spawnDataList.add(spawnData);

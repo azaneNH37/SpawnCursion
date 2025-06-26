@@ -1,5 +1,6 @@
 package com.azane.spcurs.util;
 
+import com.azane.spcurs.lib.RlHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -11,9 +12,9 @@ import java.util.Optional;
 
 public final class RegistryCaster
 {
-    public static final ResourceLocation LIVING_ENTITY_TYPE = ResourceLocation.tryParse("living");
-    public static final ResourceLocation MONSTER_TYPE = ResourceLocation.tryParse("monster");
-    public static final ResourceLocation PLAYER_TYPE = ResourceLocation.tryParse("player");
+    public static final ResourceLocation LIVING_ENTITY_TYPE = RlHelper.parse("living");
+    public static final ResourceLocation MONSTER_TYPE = RlHelper.parse("monster");
+    public static final ResourceLocation PLAYER_TYPE = RlHelper.parse("player");
 
     public static Optional<Class<? extends Entity>> getEntityClass(ResourceLocation rl)
     {

@@ -43,7 +43,7 @@ public class SpawnConfig implements IComponentDisplay
         {
             tooltip.add(Component.translatable("spcurs.sc.config.counter",killAmt,createAmt,existingAmt).withStyle(ChatFormatting.GRAY));
             tooltip.add(Component.translatable("spcurs.sc.config.per_spawn",spawnCnt).withStyle(ChatFormatting.GRAY));
-            tooltip.add(Component.translatable("spcurs.sc.config.timer",firstSpawn,interval).withStyle(ChatFormatting.GRAY).append(": " + interval));
+            tooltip.add(Component.translatable("spcurs.sc.config.timer",firstSpawn,interval).withStyle(ChatFormatting.GRAY));
             tooltip.add(Component.translatable("spcurs.sc.config.range",range).withStyle(ChatFormatting.GRAY));
         }
     }

@@ -4,6 +4,7 @@ import com.azane.cjsop.annotation.JsonClassTypeBinder;
 import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.genable.data.ISpcursPlugin;
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.util.RegistryCaster;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -25,7 +26,7 @@ public class GoalTargetAdd implements ISpcursPlugin,IPersistantGoal
 {
     @Getter
     @Expose(serialize = false,deserialize = false)
-    public final ResourceLocation goalType = ResourceLocation.fromNamespaceAndPath(SpcursMod.MOD_ID, "goal.target.add");
+    public final ResourceLocation goalType = RlHelper.build(SpcursMod.MOD_ID, "goal.target.add");
 
     @SerializedName("priority")
     private int priority;

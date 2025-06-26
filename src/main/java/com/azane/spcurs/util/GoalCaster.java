@@ -1,6 +1,7 @@
 package com.azane.spcurs.util;
 
 import com.azane.spcurs.genable.data.CommonGoalArg;
+import com.azane.spcurs.lib.RlHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -45,7 +46,7 @@ public class GoalCaster
 
     public static void register(String name, GoalFactory<?> factory)
     {
-        ResourceLocation rl = ResourceLocation.parse(name);
+        ResourceLocation rl = RlHelper.parse(name);
         if(GOAL_MAP.containsKey(rl))
         {
             throw new IllegalArgumentException("Goal with name " + name + " already registered!");

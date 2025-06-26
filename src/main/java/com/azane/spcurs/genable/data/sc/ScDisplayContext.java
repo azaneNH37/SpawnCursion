@@ -1,6 +1,7 @@
 package com.azane.spcurs.genable.data.sc;
 
 import com.azane.spcurs.SpcursMod;
+import com.azane.spcurs.lib.RlHelper;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 public class ScDisplayContext
 {
     @SerializedName("img")
-    private ResourceLocation imgRl = ResourceLocation.tryBuild(SpcursMod.MOD_ID,"spawner/default");
+    private ResourceLocation imgRl = RlHelper.build(SpcursMod.MOD_ID,"spawner/default");
     @SerializedName(value = "render_color", alternate = "entity_color")
     @Setter
     private int entityColor = 0xFFFFFFFF;

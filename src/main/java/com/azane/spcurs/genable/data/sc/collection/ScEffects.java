@@ -2,6 +2,7 @@ package com.azane.spcurs.genable.data.sc.collection;
 
 import com.azane.spcurs.genable.data.ISpcursPlugin;
 import com.azane.spcurs.genable.data.ScGson;
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.resource.helper.ParserHelper;
 import com.azane.spcurs.resource.service.JsonTypeManagers;
 import com.google.gson.*;
@@ -28,7 +29,7 @@ public class ScEffects
             Optional.ofNullable(jsonObject.getAsJsonObject("set"))
                 .map(JsonObject::asMap).ifPresent(map->map.forEach(
                     (rl,element)->{
-                        ResourceLocation resourceLocation = ResourceLocation.tryParse(rl);
+                        ResourceLocation resourceLocation = RlHelper.parse(rl);
                         //DebugLogger.log(rl);
                         if (resourceLocation != null && element.isJsonObject())
                         {
@@ -70,7 +71,7 @@ public class ScEffects
 
         public Builder add(String resourceLocation, ISpcursPlugin plugin)
         {
-            scEffects.set.put(ResourceLocation.parse(resourceLocation), plugin);
+            scEffects.set.put(RlHelper.parse(resourceLocation), plugin);
             return this;
         }
 

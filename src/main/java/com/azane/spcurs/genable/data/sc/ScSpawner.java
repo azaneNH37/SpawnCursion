@@ -7,8 +7,8 @@ import com.azane.spcurs.genable.item.base.IGenItem;
 import com.azane.spcurs.genable.item.base.IGenItemDatabase;
 import com.azane.spcurs.genable.item.base.IPolyItemDataBase;
 import com.azane.spcurs.lib.IComponentDisplay;
+import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.registry.ModItem;
-import com.azane.spcurs.resource.helper.IresourceLocation;
 import com.azane.spcurs.util.ComponentUtil;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -43,7 +43,7 @@ public class ScSpawner implements IGenItemDatabase, IComponentDisplay
     private ScDisplayContext displayContext = new ScDisplayContext();
 
     @SerializedName("loot_table")
-    private ResourceLocation lootTable = ResourceLocation.parse("chests/ancient_city");
+    private ResourceLocation lootTable = RlHelper.parse("chests/ancient_city");
 
     @Override
     public String toString()
