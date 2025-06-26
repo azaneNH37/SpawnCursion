@@ -1,7 +1,6 @@
 package com.azane.spcurs.client.lib;
 
 import com.azane.spcurs.SpcursMod;
-import com.azane.spcurs.debug.log.DebugLogger;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -48,7 +47,6 @@ public class SimpleProgressBarRenderer
         int layer = 0;
         for(float progress : progresses)
         {
-            DebugLogger.log("{},{}",layer,progress);
             float filledWidth = barWidth * progress;
             if (progress > 0) {
                 renderProgressQuad(matrix, normal, consumer,

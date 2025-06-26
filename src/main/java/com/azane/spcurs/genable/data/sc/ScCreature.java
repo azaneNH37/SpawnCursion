@@ -29,6 +29,8 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.stream.Stream;
+
 @Getter
 public class ScCreature implements IresourceLocation
 {
@@ -47,9 +49,10 @@ public class ScCreature implements IresourceLocation
     @SerializedName("effects")
     private ScEffects effects = new ScEffects();
 
-    public void spawn(ServerLevel level, BlockPos centre, ScSpawner scSpawner, ScCreatureSpawnData spawnData)
+    public void spawn(ServerLevel level, BlockPos centre, SpcursEntity spcursEntity, ScCreatureSpawnData spawnData)
     {
         //DebugLogger.log("Spawning creature " + id + " at " + centre + " with spawn data: " + spawnData);
+        ScSpawner scSpawner = spcursEntity.getScSpawner();
         RandomSource random = level.getRandom();
         EntityType<?> creatureType = EntityType.byString(creature.toString()).orElse(EntityType.PIG);
         int success = 0;
@@ -77,12 +80,14 @@ public class ScCreature implements IresourceLocation
                 if (!level.addFreshEntity(entity))
                     break;
                 success++;
-                linkSpawner(level,centre,scSpawner,entity);
+                linkSpawner(level,centre,spcursEntity,entity);
+                //DebugLogger.log("Spawned creature " + id + " at " + targetPos);
                 if(entity instanceof LivingEntity living)
                 {
-                    effects.entrySet().forEach(entry->{
-                        entry.getValue().onEntityCreate(level,centre,living);
-                    });
+                    scSpawner.getGlobalEffects().entrySet().forEach(entry-> entry.getValue().onEntityCreate(level,centre,living));
+                    effects.entrySet().forEach(entry-> entry.getValue().onEntityCreate(level,centre,living));
+                    if(spcursEntity.getTempSpawnModifier() != null)
+                        spcursEntity.getTempSpawnModifier().entrySet().forEach(entry-> entry.getValue().onEntityCreate(level,centre,living));
                 }
                 level.levelEvent(2004, centre, 0);
                 level.gameEvent(entity, GameEvent.ENTITY_PLACE, targetPos);
@@ -94,7 +99,7 @@ public class ScCreature implements IresourceLocation
         //DebugLogger.log("Spawning creature " + id + " at " + centre + " with spawn data: " + spawnData);
     }
 
-    public void linkSpawner(ServerLevel level,BlockPos pos,ScSpawner scSpawner,Entity entity)
+    public void linkSpawner(ServerLevel level,BlockPos pos,SpcursEntity spcursEntity,Entity entity)
     {
         CompoundTag tag = new CompoundTag();
         tag.putLong("pos",pos.asLong());

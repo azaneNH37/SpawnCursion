@@ -16,7 +16,7 @@ public class ScEffects
     @SerializedName("set")
     private LinkedHashMap<ResourceLocation, ISpcursPlugin> set = new LinkedHashMap<>();
 
-    public static class ScEffectDeserializer implements JsonDeserializer<ScEffects>
+    public static class ScEffectSerializer implements JsonDeserializer<ScEffects>,JsonSerializer<ScEffects>
     {
         @Override
         public ScEffects deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
@@ -44,6 +44,18 @@ public class ScEffects
                     }
                 ));
             return scEffects;
+        }
+
+        @Override
+        public JsonElement serialize(ScEffects src, Type typeOfSrc, JsonSerializationContext context)
+        {
+            JsonObject jsonObject = new JsonObject();
+            JsonObject setObject = new JsonObject();
+            src.set.forEach((resourceLocation, plugin) -> {
+                setObject.add(resourceLocation.toString(), context.serialize(plugin));
+            });
+            jsonObject.add("set", setObject);
+            return jsonObject;
         }
     }
 

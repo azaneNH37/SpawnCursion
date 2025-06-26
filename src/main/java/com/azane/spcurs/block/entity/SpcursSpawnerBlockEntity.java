@@ -63,7 +63,7 @@ public class SpcursSpawnerBlockEntity extends BlockEntity implements IScSpawner
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if(blockEntity instanceof SpcursSpawnerBlockEntity spawnerBlockEntity)
         {
-            spawnerBlockEntity.spawner = SpcursEntity.create(rl,null,false);
+            spawnerBlockEntity.spawner = SpcursEntity.create(rl,null,null,false);
             spawnerBlockEntity.setChanged();
         }
     }
@@ -90,7 +90,7 @@ public class SpcursSpawnerBlockEntity extends BlockEntity implements IScSpawner
             CompoundTag ctag = null;
             if(pTag.contains("spawner"))
                 ctag = pTag.getCompound("spawner");
-            this.spawner = SpcursEntity.create(ResourceLocation.parse(pTag.getString("spawnerID")), ctag, this.getLevel() == null || this.getLevel().isClientSide());
+            this.spawner = SpcursEntity.create(ResourceLocation.parse(pTag.getString("spawnerID")), ctag, null,this.getLevel() == null || this.getLevel().isClientSide());
         }
         else
             this.spawner = null;

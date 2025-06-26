@@ -11,6 +11,6 @@ public enum ScGson
 
     public final Gson GSON = new GsonBuilder()
         .registerTypeAdapter(ResourceLocation.class,new ResourceLocation.Serializer())
-        .registerTypeAdapter(ScEffects.class, new ScEffects.ScEffectDeserializer())
+        .registerTypeAdapter(ScEffects.class, new ScEffects.ScEffectSerializer())
         .create();
 }

@@ -3,11 +3,16 @@ package com.azane.spcurs.spawn;
 import com.azane.spcurs.block.EraserBlock;
 import com.azane.spcurs.block.WrapperBlock;
 import com.azane.spcurs.debug.log.DebugLogger;
+import com.azane.spcurs.genable.data.ScGson;
 import com.azane.spcurs.genable.data.sc.ScCreature;
 import com.azane.spcurs.genable.data.sc.ScSpawner;
+import com.azane.spcurs.genable.data.sc.collection.ScEffects;
 import com.azane.spcurs.registry.ModBlock;
+import com.azane.spcurs.resource.service.IResourceProvider;
 import com.azane.spcurs.resource.service.ServerDataService;
+import com.google.gson.Gson;
 import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.function.Supplier;
 
 /**
  * SpcursEntity represents a spawner entity in the game.<br>
@@ -50,13 +56,27 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
     @Getter
     private LinkedList<ScCreatureSpawnData> spawnDataList = new LinkedList<>();
 
+    @Getter
+    @Setter
+    @Nullable
+    private ScEffects tempSpawnModifier;
+
     private SpcursEntity(@NotNull ResourceLocation rl)
     {
         this.spawnerID = rl;
     }
 
+
+    /**
+     *
+     * @param rl ScSpawner资源标识符
+     * @param tag 当tag存在时，tempSpawnModifier会被忽略
+     * @param tempSpawnModifier 用于在初创{@link SpcursEntity}时，设置在局内修改的追加效果
+     * @param isClientSide
+     * @return
+     */
     @Nullable
-    public static SpcursEntity create(ResourceLocation rl,@Nullable CompoundTag tag,boolean isClientSide)
+    public static SpcursEntity create(ResourceLocation rl, @Nullable CompoundTag tag, @Nullable Supplier<ScEffects> tempSpawnModifier, boolean isClientSide)
     {
         if(ServerDataService.get().getSpawner(rl) == null)
             return null;
@@ -66,6 +86,8 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
             entity.getScSpawner().getCreatures().entrySet()
                 .forEach(entry-> entity.insertToSpawnList(new ScCreatureSpawnData(entry.getKey(), entry.getValue()))
                 );
+            if(tempSpawnModifier != null)
+                entity.setTempSpawnModifier(tempSpawnModifier.get());
         }
         else
         {
@@ -108,7 +130,7 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
                 if(!cache.isAbleToSpawn(targetCreature))
                     cache.acceptUnitSpawn(targetCreature,0);
                 else
-                    targetCreature.spawn(level,pos,spawner,cache);
+                    targetCreature.spawn(level,pos,this,cache);
                 if(cache.isSpawnFinished(targetCreature))
                 {
                     DebugLogger.info(MARKER,"SpcursEntity finished spawning creature " + cache.getScCreatureRl() + " at " + pos);
@@ -203,7 +225,10 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
         nbt.putLong("ticks", ticks);
         nbt.putInt("finishedSpawns", finishedSpawns);
         nbt.putString("spawnerID", spawnerID.toString());
-        //DebugLogger.log("saved nbt: "+nbt.getAsString());
+        if(tempSpawnModifier != null)
+        {
+            nbt.putString("tempSpawnModifier", ScGson.INSTANCE.GSON.toJson(tempSpawnModifier));
+        }
         return nbt;
     }
 
@@ -229,7 +254,11 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
         overallTicks = nbt.getLong("overallTicks");
         ticks = nbt.getLong("ticks");
         finishedSpawns = nbt.getInt("finishedSpawns");
-        DebugLogger.log(this.toString());
+        if (nbt.contains("tempSpawnModifier")) {
+            tempSpawnModifier = ScGson.INSTANCE.GSON.fromJson(nbt.getString("tempSpawnModifier"), ScEffects.class);
+        } else {
+            tempSpawnModifier = null;
+        }
     }
 
     @Override
@@ -241,6 +270,11 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
         sb.append("\noverallTicks=").append(overallTicks);
         sb.append("\nticks=").append(ticks);
         sb.append("\nfinishedSpawns=").append(finishedSpawns);
+        if (tempSpawnModifier != null) {
+            sb.append("\ntempSpawnModifier=").append(tempSpawnModifier);
+        } else {
+            sb.append("\ntempSpawnModifier=null");
+        }
         sb.append("\nspawnDataList=[");
         for (ScCreatureSpawnData data : spawnDataList) {
             sb.append("\n").append(data.toString());

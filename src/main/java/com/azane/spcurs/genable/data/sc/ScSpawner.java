@@ -2,6 +2,7 @@ package com.azane.spcurs.genable.data.sc;
 
 import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.genable.data.sc.collection.ScCreatures;
+import com.azane.spcurs.genable.data.sc.collection.ScEffects;
 import com.azane.spcurs.genable.item.base.IGenItem;
 import com.azane.spcurs.genable.item.base.IGenItemDatabase;
 import com.azane.spcurs.genable.item.base.IPolyItemDataBase;
@@ -24,6 +25,9 @@ public class ScSpawner implements IGenItemDatabase
 
     @SerializedName("creatures")
     private ScCreatures creatures = new ScCreatures();
+
+    @SerializedName("global_effects")
+    private ScEffects globalEffects = new ScEffects();
 
     @SerializedName("active_range")
     private double activeRange = 64.0D;
