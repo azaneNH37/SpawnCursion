@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "spcurs:block/spawner"
+      "model": "spcurs:block/casino"
     }
   }
 }
