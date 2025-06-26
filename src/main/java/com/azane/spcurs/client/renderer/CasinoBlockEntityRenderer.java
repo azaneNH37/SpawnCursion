@@ -26,7 +26,7 @@ public class CasinoBlockEntityRenderer implements BlockEntityRenderer<CasinoBloc
                 poseStack.pushPose();
 
                 // 位置偏移
-                poseStack.translate(i+(i == 0 ? 0.2 : -0.2), 1.2 , 0.5);
+                poseStack.translate((1-i)+(i == 1 ? 0.2 : -0.2), 1.2 , 0.5);
 
                 // 旋转动画
                 if(blockEntity.getLevel() != null)
