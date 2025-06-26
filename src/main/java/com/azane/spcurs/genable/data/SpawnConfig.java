@@ -1,10 +1,18 @@
 package com.azane.spcurs.genable.data;
 
+import com.azane.spcurs.lib.IComponentDisplay;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+
+import java.util.List;
 
 @Getter
-public class SpawnConfig
+public class SpawnConfig implements IComponentDisplay
 {
     @SerializedName("kill_amt")
     private int killAmt;
@@ -22,6 +30,23 @@ public class SpawnConfig
     private double range;
     @SerializedName("first_spawn")
     private long firstSpawn = 5;
+
+    @Override
+    public void appendHoverText(ItemStack stack, List<Component> tooltip, TooltipFlag flag)
+    {
+        ((MutableComponent)(tooltip.get(tooltip.size()-1))).append(" ").append(
+            Component.translatable("spcurs.sc.config.strategy." + strategy.name())
+                .withStyle(ChatFormatting.BOLD)
+                .withStyle(strategy == SpawnStrategy.create ? ChatFormatting.GREEN : ChatFormatting.RED)
+                .append(String.valueOf(expectedSpawnAmt())));
+        if(flag.isAdvanced() || flag.isCreative())
+        {
+            tooltip.add(Component.translatable("spcurs.sc.config.counter",killAmt,createAmt,existingAmt).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("spcurs.sc.config.per_spawn",spawnCnt).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("spcurs.sc.config.timer",firstSpawn,interval).withStyle(ChatFormatting.GRAY).append(": " + interval));
+            tooltip.add(Component.translatable("spcurs.sc.config.range",range).withStyle(ChatFormatting.GRAY));
+        }
+    }
 
     public enum SpawnStrategy
     {
@@ -52,6 +77,7 @@ public class SpawnConfig
             case create -> createAmt;
         };
     }
+
 
     @Override
     public String toString()

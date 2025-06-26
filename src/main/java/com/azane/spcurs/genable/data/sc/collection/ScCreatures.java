@@ -1,15 +1,20 @@
 package com.azane.spcurs.genable.data.sc.collection;
 
 import com.azane.spcurs.genable.data.sc.ScCreature;
+import com.azane.spcurs.lib.IComponentDisplay;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ScCreatures
+public class ScCreatures implements IComponentDisplay
 {
     @SerializedName("set")
     @Getter
@@ -33,5 +38,11 @@ public class ScCreatures
         }
         builder.append('}');
         return builder.toString();
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, List<Component> tooltip, TooltipFlag flag)
+    {
+        set.values().forEach(creature -> creature.appendHoverText(stack,tooltip,flag));
     }
 }

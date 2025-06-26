@@ -1,0 +1,22 @@
+{
+ "spcurs.sc.config.strategy.kill": "To Kill",
+  "spcurs.sc.config.strategy.create": "To Spawn",
+  "spcurs.sc.config.strategy.limit": "To Process",
+  "spcurs.sc.config.counter": "Kill Limit: %d, Spawn Limit: %d, Concurrent Limit: %d",
+  "spcurs.sc.config.per_spawn": "Max Per Spawn: %d",
+  "spcurs.sc.config.timer": "Initial Delay: %d ticks; Spawn Interval: %d ticks",
+  "spcurs.sc.config.range": "Spawn Range: %d blocks",
+  "spcurs.sc.loot_table": "Loot Table: %s",
+
+  "block.spcurs.spawner": "Etched Core",
+  "block.spcurs.wrapper": "Encapsulation Shell",
+  "block.spcurs.eraser": "Memory Scrubber",
+  "block.spcurs.loader": "Template Loading Disk",
+
+  "block.spcurs.casino": "ALL!  (the casino)",
+
+  "item.spcurs.scmyco": "Bio-Vector Protocol",
+  "item.spcurs.scmyco.fail": "Bio-Vector Protocol (Inactivated)",
+
+  "spcurs.tab.sc": "Bio-Vector Protocol Stack"
+}

@@ -3,6 +3,7 @@ package com.azane.spcurs.genable.data.sc;
 import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.genable.data.SpawnConfig;
 import com.azane.spcurs.genable.data.sc.collection.ScEffects;
+import com.azane.spcurs.lib.IComponentDisplay;
 import com.azane.spcurs.resource.helper.IresourceLocation;
 import com.azane.spcurs.spawn.IScSpawner;
 import com.azane.spcurs.spawn.ScCreatureSpawnData;
@@ -11,9 +12,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -21,6 +24,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
@@ -28,8 +33,10 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 @Getter
-public class ScCreature implements IresourceLocation
+public class ScCreature implements IresourceLocation, IComponentDisplay
 {
     public static final String IDENTIFIER = "sc_creature";
     public static final Marker MARKER = MarkerManager.getMarker("ScCreature");
@@ -168,5 +175,13 @@ public class ScCreature implements IresourceLocation
                 "\nspawnConfig=" + (spawnConfig != null ? spawnConfig.toString() : "<null>") +
                 "\neffects=" + (effects != null ? effects.toString() : "<null>") +
                 '}';
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, List<Component> tooltip, TooltipFlag flag)
+    {
+        EntityType<?> entityType = EntityType.byString(creature.toString()).orElse(EntityType.PIG);
+        tooltip.add(Component.translatable(entityType.getDescriptionId()).withStyle(ChatFormatting.WHITE));
+        spawnConfig.appendHoverText(stack, tooltip, flag);
     }
 }

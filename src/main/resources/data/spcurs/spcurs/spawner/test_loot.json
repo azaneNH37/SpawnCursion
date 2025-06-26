@@ -6,7 +6,8 @@
     "line_color": 12526114,
     "head_color": 16711914,
     "leg_color": 13425663,
-    "name": "spcurs.sc.spawner.test_loot"
+    "name": "<奖励箱测试>",
+    "rarity": 6
   },
   "creatures": {
     "set": {

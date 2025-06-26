@@ -22,7 +22,9 @@ public class ScDisplayContext
     private int itemLegColor = 0xFFEEE6C8;
 
     @SerializedName("name")
-    private String name = "spcurs.sc.name.default";
+    private String name = "(Default Spawner)";
+    @SerializedName("rarity")
+    private int rarity = 3;
 
     public int getItemColor(int tintIndex)
     {

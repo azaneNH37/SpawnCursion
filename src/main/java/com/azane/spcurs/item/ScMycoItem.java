@@ -13,6 +13,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -66,16 +68,30 @@ public class ScMycoItem extends Item implements IPolyItemDataBase<ScSpawner>, IG
     }
 
     @Override
+    public String getDescriptionId(ItemStack pStack)
+    {
+        ScSpawner dataBase = getDataBaseForStack(pStack);
+        if (dataBase == null)
+            return "item.spcurs.scmyco.fail";
+        return "item.spcurs.scmyco";
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced)
     {
-        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         if(!isDataBaseForStack(pStack))
-            return;
-        ScSpawner dataBase = getDataBaseForStack(pStack);
-        if (dataBase == null) {
+        {
+            super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
             pTooltipComponents.add(Component.literal("No database found for this item."));
             return;
         }
-        pTooltipComponents.add(Component.literal(dataBase.getDisplayContext().getName()));
+        ScSpawner dataBase = getDataBaseForStack(pStack);
+        if (dataBase == null) {
+            super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+            pTooltipComponents.add(Component.literal("No database found for this item."));
+            return;
+        }
+        dataBase.appendHoverText(pStack, pTooltipComponents, pIsAdvanced);
     }
 }

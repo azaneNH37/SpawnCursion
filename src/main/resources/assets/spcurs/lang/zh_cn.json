@@ -1,0 +1,22 @@
+{
+  "spcurs.sc.config.strategy.kill": "待击杀",
+  "spcurs.sc.config.strategy.create": "待生成",
+  "spcurs.sc.config.strategy.limit": "待处理",
+  "spcurs.sc.config.counter": "击杀限制：%d，生成限制：%d，同时存在限制：%d",
+  "spcurs.sc.config.per_spawn": "单次最大生成：%d",
+  "spcurs.sc.config.timer": "首次生成: %d刻；生成间隔：%d刻",
+  "spcurs.sc.config.range": "生成范围：%d格",
+  "spcurs.sc.loot_table": "奖励箱: %s",
+
+  "block.spcurs.spawner": "蚀刻核心",
+  "block.spcurs.wrapper": "封装隔离壳",
+  "block.spcurs.eraser": "内存擦除器",
+  "block.spcurs.loader": "模板载入盘",
+
+  "block.spcurs.casino": "好得不能再好了！ 的控制台",
+
+  "item.spcurs.scmyco": "生物向量协议",
+  "item.spcurs.scmyco.fail": "生物向量协议(失活)",
+
+  "spcurs.tab.sc": "生物向量协议栈"
+}
