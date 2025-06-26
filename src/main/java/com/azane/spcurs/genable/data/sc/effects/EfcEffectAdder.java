@@ -4,10 +4,10 @@ import com.azane.cjsop.annotation.JsonClassTypeBinder;
 import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.genable.data.ISpcursPlugin;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -15,6 +15,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.registries.ForgeRegistries;
 
+@NoArgsConstructor
+@AllArgsConstructor(staticName = "of")
 @JsonClassTypeBinder(fullName = "efc.effect", simpleName = "effc", namespace = SpcursMod.MOD_ID)
 public class EfcEffectAdder implements ISpcursPlugin
 {

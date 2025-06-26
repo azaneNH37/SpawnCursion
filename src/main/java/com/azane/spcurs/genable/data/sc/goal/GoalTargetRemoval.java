@@ -5,7 +5,9 @@ import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.genable.data.ISpcursPlugin;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -13,8 +15,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestHealableRaiderTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 
+@NoArgsConstructor
+@AllArgsConstructor(staticName = "of")
 @JsonClassTypeBinder(fullName = "goal.target.rm",simpleName = "tarrm",namespace = SpcursMod.MOD_ID)
 public class GoalTargetRemoval implements ISpcursPlugin,IPersistantGoal
 {
@@ -40,8 +44,8 @@ public class GoalTargetRemoval implements ISpcursPlugin,IPersistantGoal
         {
             GoalSelector targetSelector = mob.targetSelector;
             targetSelector.removeAllGoals(goal ->
-                (nearest && goal instanceof NearestHealableRaiderTargetGoal<?>)
-                    || (hurt && goal instanceof HurtByTargetGoal)
+                (nearest && (goal instanceof NearestAttackableTargetGoal<?>))
+                    || (hurt && (goal instanceof HurtByTargetGoal))
             );
 
             if(!isRecreate)

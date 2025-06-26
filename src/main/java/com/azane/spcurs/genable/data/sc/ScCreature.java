@@ -1,6 +1,5 @@
 package com.azane.spcurs.genable.data.sc;
 
-import com.azane.spcurs.block.entity.SpcursSpawnerBlockEntity;
 import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.genable.data.SpawnConfig;
 import com.azane.spcurs.genable.data.sc.collection.ScEffects;
@@ -28,8 +27,6 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.stream.Stream;
 
 @Getter
 public class ScCreature implements IresourceLocation
@@ -68,7 +65,7 @@ public class ScCreature implements IresourceLocation
                 BlockPos targetPos = BlockPos.containing(pos);
                 //if (!SpawnPlacements.checkSpawnRules(creatureType, level, MobSpawnType.SPAWNER, targetPos, random))
                 //    continue;
-                Entity entity = creatureType.create(level);
+                Entity entity = creatureType.create(level,null,null,targetPos, MobSpawnType.SPAWNER, false, false);
                 if(entity == null)
                     break;
                 entity.moveTo(targetPos,random.nextFloat() * 360.0F, 0.0F);
@@ -87,7 +84,7 @@ public class ScCreature implements IresourceLocation
                     scSpawner.getGlobalEffects().entrySet().forEach(entry-> entry.getValue().onEntityCreate(level,centre,living));
                     effects.entrySet().forEach(entry-> entry.getValue().onEntityCreate(level,centre,living));
                     if(spcursEntity.getTempSpawnModifier() != null)
-                        spcursEntity.getTempSpawnModifier().entrySet().forEach(entry-> entry.getValue().onEntityCreate(level,centre,living));
+                        spcursEntity.getTempSpawnModifier().entrySet().forEach(entry -> entry.getValue().onEntityCreate(level, centre, living));
                 }
                 level.levelEvent(2004, centre, 0);
                 level.gameEvent(entity, GameEvent.ENTITY_PLACE, targetPos);
@@ -106,6 +103,7 @@ public class ScCreature implements IresourceLocation
         tag.putString("level",level.toString());
         tag.putString("ScCreature",id.toString());
         entity.getPersistentData().put(IDENTIFIER, tag);
+        //DebugLogger.log("Linked ScCreature with NBT {}", tag);
     }
 
     public static void feedbackSpawner(ServerLevel level, Entity entity, CompoundTag data, @Nullable DamageSource damageSource)

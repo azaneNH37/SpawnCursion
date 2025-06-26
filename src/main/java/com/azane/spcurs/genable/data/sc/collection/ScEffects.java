@@ -64,6 +64,22 @@ public class ScEffects
         return set.entrySet();
     }
 
+    public static class Builder
+    {
+        private final ScEffects scEffects = new ScEffects();
+
+        public Builder add(String resourceLocation, ISpcursPlugin plugin)
+        {
+            scEffects.set.put(ResourceLocation.parse(resourceLocation), plugin);
+            return this;
+        }
+
+        public ScEffects build()
+        {
+            return scEffects;
+        }
+    }
+
     @Override
     public String toString()
     {

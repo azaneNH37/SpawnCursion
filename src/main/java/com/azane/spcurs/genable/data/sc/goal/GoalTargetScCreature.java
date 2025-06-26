@@ -5,7 +5,10 @@ import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.genable.data.ISpcursPlugin;
 import com.azane.spcurs.genable.data.sc.ScCreature;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -13,6 +16,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 
+@NoArgsConstructor
+@AllArgsConstructor(staticName = "of")
 @JsonClassTypeBinder(fullName = "goal.target.scc",simpleName = "tarscc",namespace = SpcursMod.MOD_ID)
 public class GoalTargetScCreature implements ISpcursPlugin,IPersistantGoal
 {
@@ -20,14 +25,8 @@ public class GoalTargetScCreature implements ISpcursPlugin,IPersistantGoal
     @Expose(serialize = false,deserialize = false)
     public final ResourceLocation goalType = ResourceLocation.fromNamespaceAndPath(SpcursMod.MOD_ID,"goal.target.scc");
 
+    @SerializedName("spawner_pos")
     private long spawnerPos;
-
-    public GoalTargetScCreature(){}
-
-    public GoalTargetScCreature(long spawnerPos)
-    {
-        this.spawnerPos = spawnerPos;
-    }
 
     @Override
     public void onEntityCreate(ServerLevel level, BlockPos blockPos, LivingEntity entity)
@@ -41,11 +40,10 @@ public class GoalTargetScCreature implements ISpcursPlugin,IPersistantGoal
         if(entity instanceof Mob mob)
         {
             mob.targetSelector.addGoal(0,new NearestAttackableTargetGoal<>(mob, LivingEntity.class,false,living->
-                entity.getPersistentData().contains(ScCreature.IDENTIFIER) &&
-                    entity.getPersistentData().getCompound(ScCreature.IDENTIFIER).contains("pos") &&
-                    entity.getPersistentData().getCompound(ScCreature.IDENTIFIER).getLong("pos") == spawnerPos
+                living.getPersistentData().contains(ScCreature.IDENTIFIER) &&
+                    living.getPersistentData().getCompound(ScCreature.IDENTIFIER).contains("pos") &&
+                    living.getPersistentData().getCompound(ScCreature.IDENTIFIER).getLong("pos") == spawnerPos
             ));
-
             if(!isRecreate)
                 GoalPersistantHelper.mobStoreGoal(mob, this);
         }

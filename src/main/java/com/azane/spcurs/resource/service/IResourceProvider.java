@@ -2,6 +2,7 @@ package com.azane.spcurs.resource.service;
 
 import com.azane.spcurs.genable.data.sc.ScSpawner;
 import com.azane.spcurs.genable.tag.ScSpawnerTag;
+import com.azane.spcurs.lib.GsonExtra;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -13,6 +14,8 @@ public interface IResourceProvider
 {
     Gson GSON = new GsonBuilder()
         .registerTypeAdapter(ResourceLocation.class,new ResourceLocation.Serializer())
+        .addSerializationExclusionStrategy(GsonExtra.EXPOSE_FILTER_serialize)
+        .addDeserializationExclusionStrategy(GsonExtra.EXPOSE_FILTER_deserialize)
         .create();
 
 

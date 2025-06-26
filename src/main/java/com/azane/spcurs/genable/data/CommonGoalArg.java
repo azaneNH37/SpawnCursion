@@ -1,9 +1,13 @@
 package com.azane.spcurs.genable.data;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import net.minecraft.resources.ResourceLocation;
 
+@NoArgsConstructor
+@AllArgsConstructor(staticName = "of")
 @Getter
 public class CommonGoalArg
 {

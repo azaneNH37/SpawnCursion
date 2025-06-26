@@ -1,9 +1,7 @@
 package com.azane.spcurs.block;
 
-import com.azane.spcurs.block.entity.SpcursSpawnerBlockEntity;
 import com.azane.spcurs.block.entity.TransformScEntity;
 import com.azane.spcurs.genable.tag.ScSpawnerTag;
-import com.azane.spcurs.registry.ModBlock;
 import com.azane.spcurs.registry.ModBlockEntity;
 import com.azane.spcurs.resource.service.ServerDataService;
 import net.minecraft.core.BlockPos;
@@ -60,7 +58,7 @@ public class LoadSpawnBlock extends BaseEntityBlock
                         return tag.getRandom();
                     else
                         return rl;
-                });
+                },null);
         }
     }
 }

@@ -2,8 +2,8 @@ package com.azane.spcurs.genable.data.sc.goal;
 
 import com.azane.spcurs.genable.data.ISpcursPlugin;
 import com.azane.spcurs.genable.data.ScGson;
+import com.azane.spcurs.lib.GsonExtra;
 import com.azane.spcurs.resource.helper.ParserHelper;
-import com.azane.spcurs.resource.manager.JsonDataTypeManager;
 import com.azane.spcurs.resource.service.JsonTypeManagers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,8 +16,10 @@ import net.minecraft.world.entity.Mob;
 public final class GoalPersistantHelper
 {
     public static final Gson GSON = new GsonBuilder()
-            .registerTypeAdapter(ResourceLocation .class,new ResourceLocation.Serializer())
-            .create();
+        .registerTypeAdapter(ResourceLocation .class,new ResourceLocation.Serializer())
+        .addSerializationExclusionStrategy(GsonExtra.EXPOSE_FILTER_serialize)
+        .addDeserializationExclusionStrategy(GsonExtra.EXPOSE_FILTER_deserialize)
+        .create();
 
     public static final String SC_GOAL_TAG = "ScGoal";
 

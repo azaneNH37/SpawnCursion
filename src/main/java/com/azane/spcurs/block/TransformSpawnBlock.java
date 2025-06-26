@@ -2,6 +2,7 @@ package com.azane.spcurs.block;
 
 import com.azane.spcurs.block.entity.SpcursSpawnerBlockEntity;
 import com.azane.spcurs.debug.log.DebugLogger;
+import com.azane.spcurs.genable.data.sc.collection.ScEffects;
 import com.azane.spcurs.registry.ModBlock;
 import com.azane.spcurs.spawn.IEnterScSpawner;
 import com.azane.spcurs.util.ScTags;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class TransformSpawnBlock extends Block implements IEnterScSpawner
 {
@@ -38,12 +40,12 @@ public class TransformSpawnBlock extends Block implements IEnterScSpawner
     }
 
     @Override
-    public void doScSpawnerReplacement(ServerLevel level, BlockPos pos, BlockState state,ScSpawnerGen gen)
+    public void doScSpawnerReplacement(ServerLevel level, BlockPos pos, BlockState state, ScSpawnerGen gen, Supplier<ScEffects> modifier)
     {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         BlockPos newPos = posModifier.apply(pos);
         level.setBlock(newPos, ModBlock.SPAWNER.block.get().defaultBlockState(), 3);
-        SpcursSpawnerBlockEntity.setSpawner(level,newPos,gen.getSpawnerID(level, newPos, state));
+        SpcursSpawnerBlockEntity.setSpawner(level,newPos,gen.getSpawnerID(level, newPos, state),modifier);
     }
 
     @Override
@@ -57,6 +59,6 @@ public class TransformSpawnBlock extends Block implements IEnterScSpawner
     {
         DebugLogger.log("StateChangeBlock tick at " + pPos);
         doScSpawnerReplacement(pLevel, pPos, pState,
-            (level, pos, state) -> ScTags.getSpawnerTag(ScTags.SC_LV1).getRandom());
+            (level, pos, state) -> ScTags.getSpawnerTag(ScTags.SC_LV1).getRandom(),null);
     }
 }

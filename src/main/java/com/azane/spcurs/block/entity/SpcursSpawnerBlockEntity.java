@@ -1,6 +1,7 @@
 package com.azane.spcurs.block.entity;
 
 import com.azane.spcurs.SpcursMod;
+import com.azane.spcurs.genable.data.sc.collection.ScEffects;
 import com.azane.spcurs.network.OgnmChannel;
 import com.azane.spcurs.network.to_client.SyncScDisplayPacket;
 import com.azane.spcurs.registry.ModBlockEntity;
@@ -18,6 +19,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Supplier;
 
 public class SpcursSpawnerBlockEntity extends BlockEntity implements IScSpawner
 {
@@ -58,12 +61,12 @@ public class SpcursSpawnerBlockEntity extends BlockEntity implements IScSpawner
      * @param pos The position of the block entity.
      * @param rl The ResourceLocation of the spawner to set.
      */
-    public static void setSpawner(ServerLevel level,BlockPos pos,ResourceLocation rl)
+    public static void setSpawner(ServerLevel level, BlockPos pos, ResourceLocation rl, @Nullable Supplier<ScEffects> modifier)
     {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if(blockEntity instanceof SpcursSpawnerBlockEntity spawnerBlockEntity)
         {
-            spawnerBlockEntity.spawner = SpcursEntity.create(rl,null,null,false);
+            spawnerBlockEntity.spawner = SpcursEntity.create(rl,null,modifier,false);
             spawnerBlockEntity.setChanged();
         }
     }
