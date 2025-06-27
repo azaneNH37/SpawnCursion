@@ -18,5 +18,6 @@
   "item.spcurs.scmyco": "Bio-Vector Protocol",
   "item.spcurs.scmyco.fail": "Bio-Vector Protocol (Inactivated)",
 
-  "spcurs.tab.sc": "Bio-Vector Protocol Stack"
+  "spcurs.tab.sc": "Bio-Vector Protocol Stack",
+  "spcurs.tab.common": "SpawnCursion"
 }

@@ -6,7 +6,9 @@ import com.azane.spcurs.registry.*;
 import com.azane.spcurs.resource.service.JsonTypeManagers;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +27,8 @@ public class SpcursMod
 
     public SpcursMod(FMLJavaModLoadingContext context)
     {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,Config.init());
+
         DebugLogger.init();
 
         IEventBus modEventBus = context.getModEventBus();
@@ -38,8 +42,6 @@ public class SpcursMod
         ModCreativeTab.TABS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
-
-        //context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)

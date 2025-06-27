@@ -6,6 +6,7 @@ import com.azane.spcurs.genable.data.ScGson;
 import com.azane.spcurs.genable.data.sc.ScSpawner;
 import com.azane.spcurs.genable.tag.ScSpawnerTag;
 import com.azane.spcurs.lib.RlHelper;
+import com.azane.spcurs.registry.Config;
 import com.azane.spcurs.resource.manager.CommonDataManager;
 import com.azane.spcurs.resource.manager.INetworkCacheReloadListener;
 import com.azane.spcurs.resource.manager.specific.TagLikeDataManager;
@@ -64,7 +65,8 @@ public abstract class CommonDataService implements IResourceProvider
                 raw_color &= 0xFFFFFFFF;
                 spawner.getDisplayContext().setEntityColor((raw_color & 0xFF000000) == 0 ? (raw_color | 0xFF000000) : raw_color);
             });
-            jm.debugLogAllData();
+            if(Config.DEBUG_SCDATA.get())
+                jm.debugLogAllData();
         });
         scTag = new TagLikeDataManager<>(ScSpawnerTag.class,ResourceLocation.class, GSON,"tags/spawner", "SpcursScSpawnerTag", null);
 

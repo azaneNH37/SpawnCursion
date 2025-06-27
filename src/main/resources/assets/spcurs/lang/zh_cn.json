@@ -18,5 +18,6 @@
   "item.spcurs.scmyco": "生物向量协议",
   "item.spcurs.scmyco.fail": "生物向量协议(失活)",
 
-  "spcurs.tab.sc": "生物向量协议栈"
+  "spcurs.tab.sc": "生物向量协议栈",
+  "spcurs.tab.common": "SpawnCursion"
 }
