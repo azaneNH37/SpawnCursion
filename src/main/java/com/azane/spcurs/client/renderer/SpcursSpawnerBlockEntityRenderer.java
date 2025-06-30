@@ -36,6 +36,8 @@ public class SpcursSpawnerBlockEntityRenderer implements BlockEntityRenderer<Spc
         if(entity == null)
             return;
         ScSpawner spawner = ClientDataService.get().getSpawner(entity.getSpawnerID());
+        if(spawner == null)
+            return;
         ResourceLocation texture = spawner.getDisplayContext().getImgRl();
         texture = RlHelper.build(texture.getNamespace(),"textures/"+texture.getPath()+".png");
         int color = spawner.getDisplayContext().getEntityColor();
