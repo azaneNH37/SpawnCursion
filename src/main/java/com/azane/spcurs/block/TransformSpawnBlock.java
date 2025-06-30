@@ -1,19 +1,22 @@
 package com.azane.spcurs.block;
 
 import com.azane.spcurs.block.entity.SpcursSpawnerBlockEntity;
-import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.genable.data.sc.collection.ScEffects;
+import com.azane.spcurs.item.ScMycoItem;
 import com.azane.spcurs.registry.ModBlock;
 import com.azane.spcurs.spawn.IEnterScSpawner;
-import com.azane.spcurs.util.ScTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -49,16 +52,20 @@ public class TransformSpawnBlock extends Block implements IEnterScSpawner
     }
 
     @Override
-    public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston)
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit)
     {
-        pLevel.scheduleTick(pPos, this, 10);
-    }
-
-    @Override
-    public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom)
-    {
-        DebugLogger.log("StateChangeBlock tick at " + pPos);
-        doScSpawnerReplacement(pLevel, pPos, pState,
-            (level, pos, state) -> ScTags.getSpawnerTag(ScTags.SC_LV1).getRandom(),null);
+        if (!level.isClientSide) {
+            ItemStack heldItem = player.getItemInHand(hand);
+            if(heldItem.getItem() instanceof ScMycoItem scMycoItem)
+            {
+                ItemStack inserted = heldItem.copy();
+                inserted.setCount(1);
+                heldItem.shrink(1);
+                doScSpawnerReplacement((ServerLevel) level,pos,state,(gen, ppos, pstate) -> scMycoItem.getScSpawnerID(inserted),null);
+            }
+            else
+                return InteractionResult.PASS;
+        }
+        return InteractionResult.SUCCESS;
     }
 }

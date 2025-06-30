@@ -12,6 +12,7 @@
   "block.spcurs.wrapper": "Encapsulation Shell",
   "block.spcurs.eraser": "Memory Scrubber",
   "block.spcurs.loader": "Template Loading Disk",
+  "block.spcurs.transformer": "Dynamic Recompiler",
 
   "block.spcurs.casino": "ALL!  (the casino)",
 

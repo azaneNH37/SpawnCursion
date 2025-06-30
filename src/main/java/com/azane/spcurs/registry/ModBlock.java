@@ -20,7 +20,7 @@ public class ModBlock
     public static final ItemBlock ERASER = registerBlockItem("eraser", EraserBlock::new);
     public static final ItemBlock LOADER = registerBlockItem("loader", LoadSpawnBlock::new);
 
-    //public static final ItemBlock TRANSFORMER = registerBlockItem("transformer", TransformSpawnBlock::new);
+    public static final ItemBlock TRANSFORMER = registerBlockItem("transformer", TransformSpawnBlock::new);
     public static final ItemBlock CASINO = registerBlockItem("casino", CasinoBlock::new);
     //public static final ItemBlock DEBUG_STATE = registerBlockItem("debug_state_change", StateChangeBlock::new);
 
