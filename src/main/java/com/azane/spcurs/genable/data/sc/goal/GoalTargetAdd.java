@@ -5,7 +5,7 @@ import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.genable.data.ISpcursPlugin;
 import com.azane.spcurs.lib.RlHelper;
-import com.azane.spcurs.util.RegistryCaster;
+import com.azane.spcurs.util.TargetPredicateHelper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
@@ -14,10 +14,11 @@ import lombok.NoArgsConstructor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+
+import java.util.function.Predicate;
 
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
@@ -32,7 +33,7 @@ public class GoalTargetAdd implements ISpcursPlugin,IPersistantGoal
     private int priority;
 
     @SerializedName("target")
-    private ResourceLocation targetType;
+    private String targetType;
     @SerializedName("rand_interval")
     private int randInterval = 10;
     @SerializedName("must_see")
@@ -49,25 +50,19 @@ public class GoalTargetAdd implements ISpcursPlugin,IPersistantGoal
     @Override
     public void applyGoalToEntity(ServerLevel level, BlockPos blockPos, LivingEntity entity, boolean isRecreate)
     {
-        if(entity instanceof Mob mob)
-        {
-            if(targetType == null || targetType.toString().isEmpty())
-            {
+        if(entity instanceof Mob mob) {
+            if (targetType == null || targetType.isEmpty()) {
                 DebugLogger.warn("Target type is not specified for EfcTargetAdd effect on entity: " + entity.getType());
                 return;
             }
-            Class<? extends Entity> targetClass = RegistryCaster.getEntityClass(targetType)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid target type: " + targetType));
-            if(!LivingEntity.class.isAssignableFrom(targetClass))
-            {
-                DebugLogger.warn("Target type is not a LivingEntity for EfcTargetAdd effect on entity: " + entity.getType());
+            Predicate<LivingEntity> filter = TargetPredicateHelper.createPredicate(targetType);
+            if(filter == null) {
+                DebugLogger.warn("Failed to create target predicate for type: " + targetType);
                 return;
             }
-            Class<? extends LivingEntity> targetClassCast = targetClass.asSubclass(LivingEntity.class);
-            mob.targetSelector.addGoal(priority, new NearestAttackableTargetGoal<>(mob, targetClassCast, randInterval, mustSee, mustReach, null));
+            mob.targetSelector.addGoal(priority, new NearestAttackableTargetGoal<>(mob, LivingEntity.class, randInterval, mustSee, mustReach, filter));
 
-            if(!isRecreate)
-            {
+            if (!isRecreate) {
                 GoalPersistantHelper.mobStoreGoal(mob, this);
             }
         }
