@@ -53,6 +53,11 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
     private long ticks = 0;
     @Getter
     private int finishedSpawns = 0;
+    @Getter
+    @Setter
+    private boolean isChild = false;
+
+    private int childGenIndex = 0;
 
     @Getter
     private LinkedList<ScCreatureSpawnData> spawnDataList = new LinkedList<>();
@@ -120,6 +125,9 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
     private void activeTick(ServerLevel level,BlockPos pos)
     {
         ticks++;
+        if(!isChild)
+            if(getScSpawner().getScChildren().tryPlace(level,pos,ticks,childGenIndex))
+                childGenIndex++;
         //DebugLogger.log("SpcursEntity active tick at " + pos + " for spawner " + spawnerID + ", ticks: " + ticks);
         while (!spawnDataList.isEmpty() && spawnDataList.getFirst().isReadyToSpawn(ticks))
         {
@@ -226,6 +234,8 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
         nbt.putLong("ticks", ticks);
         nbt.putInt("finishedSpawns", finishedSpawns);
         nbt.putString("spawnerID", spawnerID.toString());
+        nbt.putBoolean("isChild", isChild);
+        nbt.putInt("childGenIndex", childGenIndex);
         if(tempSpawnModifier != null)
         {
             nbt.putString("tempSpawnModifier", ScGson.INSTANCE.GSON.toJson(tempSpawnModifier));
@@ -255,6 +265,8 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
         overallTicks = nbt.getLong("overallTicks");
         ticks = nbt.getLong("ticks");
         finishedSpawns = nbt.getInt("finishedSpawns");
+        isChild = nbt.getBoolean("isChild");
+        childGenIndex = nbt.getInt("childGenIndex");
         if (nbt.contains("tempSpawnModifier")) {
             tempSpawnModifier = ScGson.INSTANCE.GSON.fromJson(nbt.getString("tempSpawnModifier"), ScEffects.class);
         } else {
@@ -271,6 +283,8 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
         sb.append("\noverallTicks=").append(overallTicks);
         sb.append("\nticks=").append(ticks);
         sb.append("\nfinishedSpawns=").append(finishedSpawns);
+        sb.append("\nisChild=").append(isChild);
+        sb.append("\nchildGenIndex=").append(childGenIndex);
         if (tempSpawnModifier != null) {
             sb.append("\ntempSpawnModifier=").append(tempSpawnModifier);
         } else {

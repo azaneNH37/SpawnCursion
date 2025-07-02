@@ -62,14 +62,16 @@ public class SpcursSpawnerBlockEntity extends BlockEntity implements IScSpawner
      * @param pos The position of the block entity.
      * @param rl The ResourceLocation of the spawner to set.
      */
-    public static void setSpawner(ServerLevel level, BlockPos pos, ResourceLocation rl, @Nullable Supplier<ScEffects> modifier)
+    public static SpcursEntity setSpawner(ServerLevel level, BlockPos pos, ResourceLocation rl, @Nullable Supplier<ScEffects> modifier)
     {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if(blockEntity instanceof SpcursSpawnerBlockEntity spawnerBlockEntity)
         {
             spawnerBlockEntity.spawner = SpcursEntity.create(rl,null,modifier,false);
             spawnerBlockEntity.setChanged();
+            return spawnerBlockEntity.spawner;
         }
+        return null;
     }
 
     private void prepareAndSendDisplay(ServerLevel level,BlockPos blockPos)

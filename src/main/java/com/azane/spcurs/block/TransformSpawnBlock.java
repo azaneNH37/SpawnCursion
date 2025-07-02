@@ -5,6 +5,7 @@ import com.azane.spcurs.genable.data.sc.collection.ScEffects;
 import com.azane.spcurs.item.ScMycoItem;
 import com.azane.spcurs.registry.ModBlock;
 import com.azane.spcurs.spawn.IEnterScSpawner;
+import com.azane.spcurs.spawn.SpcursEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -43,12 +44,12 @@ public class TransformSpawnBlock extends Block implements IEnterScSpawner
     }
 
     @Override
-    public void doScSpawnerReplacement(ServerLevel level, BlockPos pos, BlockState state, ScSpawnerGen gen, Supplier<ScEffects> modifier)
+    public SpcursEntity doScSpawnerReplacement(ServerLevel level, BlockPos pos, BlockState state, ScSpawnerGen gen, Supplier<ScEffects> modifier)
     {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         BlockPos newPos = posModifier.apply(pos);
         level.setBlock(newPos, ModBlock.SPAWNER.block.get().defaultBlockState(), 3);
-        SpcursSpawnerBlockEntity.setSpawner(level,newPos,gen.getSpawnerID(level, newPos, state),modifier);
+        return SpcursSpawnerBlockEntity.setSpawner(level,newPos,gen.getSpawnerID(level, newPos, state),modifier);
     }
 
     @Override

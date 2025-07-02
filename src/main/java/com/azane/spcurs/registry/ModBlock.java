@@ -19,6 +19,7 @@ public class ModBlock
     public static final ItemBlock WRAPPER = registerBlockItem("wrapper", WrapperBlock::new);
     public static final ItemBlock ERASER = registerBlockItem("eraser", EraserBlock::new);
     public static final ItemBlock LOADER = registerBlockItem("loader", LoadSpawnBlock::new);
+    public static final ItemBlock INSTANT_LOAD = registerBlockItem("instant_loader", InstantSpawnBlock::new);
 
     public static final ItemBlock TRANSFORMER = registerBlockItem("transformer", TransformSpawnBlock::new);
     public static final ItemBlock CASINO = registerBlockItem("casino", CasinoBlock::new);

@@ -21,16 +21,16 @@ public interface IEnterScSpawner
 
     void setBaseSpawnerID(ResourceLocation rl);
 
-    static void placeScSpawner(ServerLevel level, BlockPos pos, BlockState state, ScSpawnerGen gen, @Nullable Supplier<ScEffects> modifier)
+    static SpcursEntity placeScSpawner(ServerLevel level, BlockPos pos, BlockState state, ScSpawnerGen gen, @Nullable Supplier<ScEffects> modifier)
     {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         BlockPos newPos = pos.above();
         level.setBlock(newPos, ModBlock.SPAWNER.block.get().defaultBlockState(), 3);
-        SpcursSpawnerBlockEntity.setSpawner(level,newPos,gen.getSpawnerID(level, newPos, state),modifier);
+        return SpcursSpawnerBlockEntity.setSpawner(level,newPos,gen.getSpawnerID(level, newPos, state),modifier);
     }
 
-    default void doScSpawnerReplacement(ServerLevel level, BlockPos pos,BlockState state,ScSpawnerGen gen,@Nullable Supplier<ScEffects> modifier)
+    default SpcursEntity doScSpawnerReplacement(ServerLevel level, BlockPos pos,BlockState state,ScSpawnerGen gen,@Nullable Supplier<ScEffects> modifier)
     {
-        IEnterScSpawner.placeScSpawner(level,pos,state,gen,modifier);
+        return IEnterScSpawner.placeScSpawner(level,pos,state,gen,modifier);
     }
 }

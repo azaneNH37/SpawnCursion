@@ -1,7 +1,6 @@
 package com.azane.spcurs.block.entity;
 
 import com.azane.spcurs.lib.RlHelper;
-import com.azane.spcurs.registry.ModBlock;
 import com.azane.spcurs.registry.ModBlockEntity;
 import com.azane.spcurs.spawn.IEnterScSpawner;
 import lombok.Getter;
@@ -10,9 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -21,6 +18,10 @@ public class TransformScEntity extends BlockEntity implements IEnterScSpawner
     @Getter
     @Setter
     private ResourceLocation baseSpawnerID;
+
+    @Getter
+    @Setter
+    private boolean isChild = false;
 
     private boolean onlyOnce = false;
 
@@ -53,6 +54,11 @@ public class TransformScEntity extends BlockEntity implements IEnterScSpawner
         } else {
             this.baseSpawnerID = null; // Default to null if not present
         }
+        if( pTag.contains("IsChild")) {
+            this.isChild = pTag.getBoolean("IsChild");
+        } else {
+            this.isChild = false; // Default to false if not present
+        }
     }
 
     @Override
@@ -64,6 +70,7 @@ public class TransformScEntity extends BlockEntity implements IEnterScSpawner
         } else {
             pTag.remove("BaseSpawnerID"); // Remove if null
         }
+        pTag.putBoolean("IsChild", this.isChild);
     }
 
     @Override

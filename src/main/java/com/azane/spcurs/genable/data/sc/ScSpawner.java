@@ -1,6 +1,7 @@
 package com.azane.spcurs.genable.data.sc;
 
 import com.azane.spcurs.debug.log.DebugLogger;
+import com.azane.spcurs.genable.data.sc.collection.ScChildren;
 import com.azane.spcurs.genable.data.sc.collection.ScCreatures;
 import com.azane.spcurs.genable.data.sc.collection.ScEffects;
 import com.azane.spcurs.genable.item.base.IGenItem;
@@ -45,6 +46,9 @@ public class ScSpawner implements IGenItemDatabase, IComponentDisplay
     @SerializedName("loot_table")
     private ResourceLocation lootTable = RlHelper.parse("chests/ancient_city");
 
+    @SerializedName("children")
+    private ScChildren scChildren = new ScChildren();
+
     @Override
     public String toString()
     {
@@ -86,5 +90,6 @@ public class ScSpawner implements IGenItemDatabase, IComponentDisplay
         tooltip.add(Component.empty());
         creatures.appendHoverText(stack,tooltip,flag);
         tooltip.add(Component.translatable("spcurs.sc.loot_table", lootTable.toString()).withStyle(ChatFormatting.GRAY));
+        scChildren.appendHoverText(stack,tooltip,flag);
     }
 }

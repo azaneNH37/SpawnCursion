@@ -5,6 +5,7 @@ import com.azane.spcurs.genable.data.sc.effects.EfcAttrModifier;
 import com.azane.spcurs.genable.data.sc.goal.GoalTargetRemoval;
 import com.azane.spcurs.genable.data.sc.goal.GoalTargetScCreature;
 import com.azane.spcurs.item.ScMycoItem;
+import com.azane.spcurs.lib.LevelHelper;
 import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.network.OgnmChannel;
 import com.azane.spcurs.network.to_client.SyncCasinoPacket;
@@ -22,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class CasinoBlockEntity extends BlockEntity
@@ -60,10 +62,12 @@ public class CasinoBlockEntity extends BlockEntity
     {
         for (int i = 0; i < 2; i++) {
             BlockPos pos = getBlockPos().north(16).east(16 * (i == 0 ? 1 : -1));
+            pos = pos.above(LevelHelper.getGroundHightAtFullChunk(level,pos, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES)-pos.getY()).above();
             ItemStack stack = inventory.getStackInSlot(i);
             if(stack.getItem() instanceof ScMycoItem scMycoItem)
             {
                 int finalI = i;
+                BlockPos finalPos = pos;
                 IEnterScSpawner.placeScSpawner(level,pos,state,(plevel, ppos, pstate)-> scMycoItem.getScSpawnerID(stack),
                     ()-> new ScEffects.Builder()
                         .add("spcurs:efc.attr-tmp",
@@ -71,7 +75,7 @@ public class CasinoBlockEntity extends BlockEntity
                         .add("spcurs:goal.target.rm-tmp",
                             GoalTargetRemoval.of(true,true))
                         .add("spcurs:goal.target.scc-tmp",
-                            GoalTargetScCreature.of(pos.above().west(32* (finalI == 0 ? 1 : -1)).asLong()))
+                            GoalTargetScCreature.of(finalPos.above().west(32* (finalI == 0 ? 1 : -1)).asLong()))
                         .build());
             }
             inventory.setStackInSlot(i, ItemStack.EMPTY);

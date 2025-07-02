@@ -10,6 +10,7 @@ import com.azane.spcurs.registry.Config;
 import com.azane.spcurs.resource.manager.CommonDataManager;
 import com.azane.spcurs.resource.manager.INetworkCacheReloadListener;
 import com.azane.spcurs.resource.manager.specific.TagLikeDataManager;
+import com.azane.spcurs.util.DataServiceInit;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.resources.ResourceLocation;
 
@@ -57,17 +58,7 @@ public abstract class CommonDataService implements IResourceProvider
     protected void reloadAndBind()
     {
        //实例化全局数据
-        spawners = new CommonDataManager<>(ScSpawner.class, ScGson.INSTANCE.GSON, "spcurs/spawner","SpcursSpawner",jm->{
-            jm.getAllData().forEach((id, spawner) -> {
-                spawner.registerDataBase();
-                spawner.getCreatures().getSet().forEach((rid, creature) -> creature.setId(rid));
-                int raw_color = spawner.getDisplayContext().getEntityColor();
-                raw_color &= 0xFFFFFFFF;
-                spawner.getDisplayContext().setEntityColor((raw_color & 0xFF000000) == 0 ? (raw_color | 0xFF000000) : raw_color);
-            });
-            if(Config.DEBUG_SCDATA.get())
-                jm.debugLogAllData();
-        });
+        spawners = new CommonDataManager<>(ScSpawner.class, ScGson.INSTANCE.GSON, "spcurs/spawner","SpcursSpawner", DataServiceInit.scSpawnerInit);
         scTag = new TagLikeDataManager<>(ScSpawnerTag.class,ResourceLocation.class, GSON,"tags/spawner", "SpcursScSpawnerTag", null);
 
         ImmutableMap.Builder<ResourceLocation, INetworkCacheReloadListener> builder = ImmutableMap.builder();

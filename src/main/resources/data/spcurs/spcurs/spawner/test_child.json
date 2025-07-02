@@ -1,0 +1,54 @@
+{
+  "active_range": 64,
+  "display": {
+    "img": "spcurs:spawner/port",
+    "entity_color": 2039583,
+    "head_color": 16711880,
+    "leg_color": 7935,
+    "name": "<子代生成测试>",
+    "rarity": 2
+  },
+  "creatures": {
+    "set": {
+      "c1":{
+        "creature": "zombie",
+        "spawn_config": {
+          "kill_amt": 20,
+          "create_amt": 30,
+          "existing_amt": 3,
+          "spawn_cnt": 4,
+          "interval": 80,
+          "strategy": "limit",
+          "range": 16,
+          "first_spawn": 20
+        },
+        "effects": {
+          "set": {
+            "attr-life1": {
+              "attr": "generic.max_health",
+              "op": "ADDITION",
+              "val": 20.0
+            },
+            "effc-power1": {
+              "effectID": "strength",
+              "level": 2,
+              "duration": 1200,
+              "visible": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "children": {
+    "list": [
+      {
+        "id": "spcurs:test_child",
+        "delay": 60,
+        "amt": 2,
+        "offset": [7,0,0],
+        "range": 10
+      }
+    ]
+  }
+}
