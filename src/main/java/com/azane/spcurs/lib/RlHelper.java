@@ -1,5 +1,6 @@
 package com.azane.spcurs.lib;
 
+import com.azane.spcurs.SpcursMod;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -7,6 +8,8 @@ import net.minecraft.resources.ResourceLocation;
  */
 public final class RlHelper
 {
+    public static final ResourceLocation EMPTY = RlHelper.build(SpcursMod.MOD_ID,"null");
+
     public static ResourceLocation parse(String rl)
     {
         return ResourceLocation.tryParse(rl);

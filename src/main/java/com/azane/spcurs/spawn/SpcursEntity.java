@@ -156,25 +156,30 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
         if(finishedSpawns < spawnDataList.size())
             return;
         DebugLogger.info(MARKER,"SpcursEntity " + spawnerID + " finished all spawns.");
+        boolean isLootEmpty = getScSpawner().getLootTable().equals(RlHelper.EMPTY);
         for(int dx = -1; dx <= 1; dx++)
         {
             for(int dz = -1; dz <= 1; dz++)
             {
                 BlockPos offsetPos = pPos.offset(dx, 2, dz);
                 BlockState state = ModBlock.ERASER.block.get().defaultBlockState();
-                if(dx == 0 && dz == 0)
+                if(dx == 0 && dz == 0 && !isLootEmpty)
                     state = state.setValue(WrapperBlock.HEIGHT,2);
                 pLevel.setBlock(offsetPos, state,3);
             }
         }
-        BlockPos chestPos = pPos.below();
-        pLevel.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 3);
-        if (pLevel.getBlockEntity(chestPos) instanceof ChestBlockEntity chest) {
-            chest.setLootTable(
-                getScSpawner().getLootTable(),
-                pLevel.getRandom().nextLong()
-            );
+        if(!isLootEmpty)
+        {
+            BlockPos chestPos = pPos.below();
+            pLevel.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 3);
+            if (pLevel.getBlockEntity(chestPos) instanceof ChestBlockEntity chest) {
+                chest.setLootTable(
+                    getScSpawner().getLootTable(),
+                    pLevel.getRandom().nextLong()
+                );
+            }
         }
+
     }
 
     private void updateActive(ServerLevel level,BlockPos blockPos)

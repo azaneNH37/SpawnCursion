@@ -44,7 +44,7 @@ public class ScSpawner implements IGenItemDatabase, IComponentDisplay
     private ScDisplayContext displayContext = new ScDisplayContext();
 
     @SerializedName("loot_table")
-    private ResourceLocation lootTable = RlHelper.parse("chests/ancient_city");
+    private ResourceLocation lootTable = RlHelper.EMPTY;
 
     @SerializedName("children")
     private ScChildren scChildren = new ScChildren();
