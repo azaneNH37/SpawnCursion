@@ -2,12 +2,15 @@ package com.azane.spcurs.genable.data.sc.collection;
 
 import com.azane.spcurs.block.entity.TransformScEntity;
 import com.azane.spcurs.genable.data.sc.ScChildConfig;
+import com.azane.spcurs.genable.data.sc.ScSpawner;
 import com.azane.spcurs.lib.IComponentDisplay;
 import com.azane.spcurs.lib.LevelHelper;
 import com.azane.spcurs.registry.ModBlock;
+import com.azane.spcurs.resource.service.ClientDataService;
 import com.azane.spcurs.spawn.SpcursEntity;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.network.chat.Component;
@@ -82,6 +85,19 @@ public class ScChildren implements IComponentDisplay
     @Override
     public void appendHoverText(ItemStack stack, List<Component> tooltip, TooltipFlag flag)
     {
-
+        tooltip.add(Component.empty());
+        if(!list.isEmpty())
+            tooltip.add(Component.translatable("spcurs.sc.tooltip.children").withStyle(ChatFormatting.WHITE));
+        for(var child : list)
+        {
+            ScSpawner spawner = ClientDataService.get().getSpawner(child.getId());
+            if(spawner == null)
+            {
+                tooltip.add(Component.literal(child.getId().toString()).withStyle(ChatFormatting.RED));
+                continue;
+            }
+            tooltip.add(Component.literal(spawner.getDisplayContext().getName()).withStyle(ChatFormatting.WHITE));
+        }
+        tooltip.add(Component.empty());
     }
 }

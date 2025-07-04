@@ -7,12 +7,14 @@
   "spcurs.sc.config.timer": "Initial Delay: %d ticks; Spawn Interval: %d ticks",
   "spcurs.sc.config.range": "Spawn Range: %d blocks",
   "spcurs.sc.loot_table": "Loot Table: %s",
+  "spcurs.sc.tooltip.children": "Children",
 
   "block.spcurs.spawner": "Etched Core",
   "block.spcurs.wrapper": "Encapsulation Shell",
   "block.spcurs.eraser": "Memory Scrubber",
   "block.spcurs.loader": "Template Loading Disk",
   "block.spcurs.transformer": "Dynamic Recompiler",
+  "block.spcurs.instant_loader": "Cache Switch",
 
   "block.spcurs.casino": "ALL!  (the casino)",
 
