@@ -4,6 +4,7 @@ import com.azane.spcurs.genable.data.sc.collection.ScEffects;
 import com.azane.spcurs.genable.data.sc.effects.EfcAttrModifier;
 import com.azane.spcurs.genable.data.sc.goal.GoalTargetRemoval;
 import com.azane.spcurs.genable.data.sc.goal.GoalTargetScCreature;
+import com.azane.spcurs.genable.data.sc.tag.StagInt;
 import com.azane.spcurs.item.ScMycoItem;
 import com.azane.spcurs.lib.LevelHelper;
 import com.azane.spcurs.lib.RlHelper;
@@ -11,10 +12,10 @@ import com.azane.spcurs.network.OgnmChannel;
 import com.azane.spcurs.network.to_client.SyncCasinoPacket;
 import com.azane.spcurs.registry.ModBlockEntity;
 import com.azane.spcurs.spawn.IEnterScSpawner;
+import com.azane.spcurs.util.TargetPredicateHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
@@ -67,7 +68,6 @@ public class CasinoBlockEntity extends BlockEntity
             if(stack.getItem() instanceof ScMycoItem scMycoItem)
             {
                 int finalI = i;
-                BlockPos finalPos = pos;
                 IEnterScSpawner.placeScSpawner(level,pos,state,(plevel, ppos, pstate)-> scMycoItem.getScSpawnerID(stack),
                     ()-> new ScEffects.Builder()
                         .add("spcurs:efc.attr-tmp",
@@ -75,7 +75,9 @@ public class CasinoBlockEntity extends BlockEntity
                         .add("spcurs:goal.target.rm-tmp",
                             GoalTargetRemoval.of(false,true))
                         .add("spcurs:goal.target.scc-tmp",
-                            GoalTargetScCreature.of(finalPos.above().west(32* (finalI == 0 ? 1 : -1)).asLong()))
+                            GoalTargetScCreature.of(finalI == 0 ? TargetPredicateHelper.CASINO_TEAM_BLUE : TargetPredicateHelper.CASINO_TEAM_RED))
+                        .add("spcurs:tag.int-team",
+                            StagInt.of(TargetPredicateHelper.TEAM_KEY, finalI == 1 ? TargetPredicateHelper.CASINO_TEAM_BLUE : TargetPredicateHelper.CASINO_TEAM_RED))
                         .build());
             }
             inventory.setStackInSlot(i, ItemStack.EMPTY);

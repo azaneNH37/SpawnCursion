@@ -5,6 +5,7 @@ import com.azane.spcurs.SpcursMod;
 import com.azane.spcurs.genable.data.ISpcursPlugin;
 import com.azane.spcurs.genable.data.sc.ScCreature;
 import com.azane.spcurs.lib.RlHelper;
+import com.azane.spcurs.util.TargetPredicateHelper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
@@ -26,8 +27,8 @@ public class GoalTargetScCreature implements ISpcursPlugin,IPersistantGoal
     @Expose(serialize = false,deserialize = false)
     public final ResourceLocation goalType = RlHelper.build(SpcursMod.MOD_ID,"goal.target.scc");
 
-    @SerializedName("spawner_pos")
-    private long spawnerPos;
+    @SerializedName("team")
+    private int targetTeam;
 
     @Override
     public void onEntityCreate(ServerLevel level, BlockPos blockPos, LivingEntity entity)
@@ -40,11 +41,7 @@ public class GoalTargetScCreature implements ISpcursPlugin,IPersistantGoal
     {
         if(entity instanceof Mob mob)
         {
-            mob.targetSelector.addGoal(0,new NearestAttackableTargetGoal<>(mob, LivingEntity.class,false,living->
-                living.getPersistentData().contains(ScCreature.IDENTIFIER) &&
-                    living.getPersistentData().getCompound(ScCreature.IDENTIFIER).contains("pos") &&
-                    living.getPersistentData().getCompound(ScCreature.IDENTIFIER).getLong("pos") == spawnerPos
-            ));
+            mob.targetSelector.addGoal(0,new NearestAttackableTargetGoal<>(mob, LivingEntity.class,false, TargetPredicateHelper.createTeamPredicate(targetTeam)));
             if(!isRecreate)
                 GoalPersistantHelper.mobStoreGoal(mob, this);
         }

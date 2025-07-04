@@ -50,4 +50,14 @@ public class TargetPredicateHelper
             return le -> tagRl.equals(ForgeRegistries.ENTITY_TYPES.getKey(le.getType()));
         }
     }
+
+    public static final String TEAM_KEY = "scTeam";
+    public static final int CASINO_TEAM_RED = -1;
+    public static final int CASINO_TEAM_BLUE = -2;
+
+    public static Predicate<LivingEntity> createTeamPredicate(int team)
+    {
+        return le -> le.getPersistentData().contains(TEAM_KEY) &&
+                le.getPersistentData().getLong(TEAM_KEY) == team;
+    }
 }
