@@ -58,7 +58,8 @@ public class LoadSpawnBlock extends BaseEntityBlock
                         return tag.getRandom();
                     else
                         return rl;
-                },null);
+                }, transformScEntity::getTempSpawnModifier);
+            transformScEntity.setChild(transformScEntity.isChild());
         }
     }
 }

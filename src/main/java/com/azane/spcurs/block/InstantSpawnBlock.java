@@ -58,7 +58,7 @@ public class InstantSpawnBlock extends BaseEntityBlock
                         return tag.getRandom();
                     else
                         return rl;
-                },null);
+                },transformScEntity::getTempSpawnModifier);
             entity.setChild(transformScEntity.isChild());
         }
     }

@@ -1,5 +1,7 @@
 package com.azane.spcurs.block.entity;
 
+import com.azane.spcurs.genable.data.ScGson;
+import com.azane.spcurs.genable.data.sc.collection.ScEffects;
 import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.registry.ModBlockEntity;
 import com.azane.spcurs.spawn.IEnterScSpawner;
@@ -12,12 +14,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public class TransformScEntity extends BlockEntity implements IEnterScSpawner
 {
     @Getter
     @Setter
     private ResourceLocation baseSpawnerID;
+
+    @Getter
+    @Setter
+    @Nullable
+    private ScEffects tempSpawnModifier;
 
     @Getter
     @Setter
@@ -59,6 +67,11 @@ public class TransformScEntity extends BlockEntity implements IEnterScSpawner
         } else {
             this.isChild = false; // Default to false if not present
         }
+        if (pTag.contains("tempSpawnModifier")) {
+            tempSpawnModifier = ScGson.INSTANCE.GSON.fromJson(pTag.getString("tempSpawnModifier"), ScEffects.class);
+        } else {
+            tempSpawnModifier = null;
+        }
     }
 
     @Override
@@ -71,6 +84,10 @@ public class TransformScEntity extends BlockEntity implements IEnterScSpawner
             pTag.remove("BaseSpawnerID"); // Remove if null
         }
         pTag.putBoolean("IsChild", this.isChild);
+        if(tempSpawnModifier != null)
+        {
+            pTag.putString("tempSpawnModifier", ScGson.INSTANCE.GSON.toJson(tempSpawnModifier));
+        }
     }
 
     @Override

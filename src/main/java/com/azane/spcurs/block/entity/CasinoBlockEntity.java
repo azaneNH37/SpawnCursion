@@ -73,7 +73,7 @@ public class CasinoBlockEntity extends BlockEntity
                         .add("spcurs:efc.attr-tmp",
                             EfcAttrModifier.of(RlHelper.parse("generic.follow_range"), AttributeModifier.Operation.ADDITION,64.0D,null,null))
                         .add("spcurs:goal.target.rm-tmp",
-                            GoalTargetRemoval.of(true,true))
+                            GoalTargetRemoval.of(false,true))
                         .add("spcurs:goal.target.scc-tmp",
                             GoalTargetScCreature.of(finalPos.above().west(32* (finalI == 0 ? 1 : -1)).asLong()))
                         .build());

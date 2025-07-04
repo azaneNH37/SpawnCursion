@@ -5,6 +5,7 @@ import com.azane.spcurs.genable.data.sc.ScChildConfig;
 import com.azane.spcurs.lib.IComponentDisplay;
 import com.azane.spcurs.lib.LevelHelper;
 import com.azane.spcurs.registry.ModBlock;
+import com.azane.spcurs.spawn.SpcursEntity;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
@@ -39,20 +40,21 @@ public class ScChildren implements IComponentDisplay
         });
     }
 
-    public boolean tryPlace(ServerLevel level, BlockPos origin,long tick,int index)
+    public boolean tryPlace(ServerLevel level, BlockPos origin, SpcursEntity entity)
     {
+        int index = entity.getChildGenIndex();
         if(index < 0 || index >= list.size())
             return false;
         ScChildConfig spawnConfig = list.get(index);
-        if(tick >= spawnConfig.getDelay())
+        if(entity.getTicks() >= spawnConfig.getDelay())
         {
-            placeChild(level, origin, index);
+            placeChild(level, origin, index,entity);
             return true;
         }
        return false;
     }
 
-    private void placeChild(ServerLevel level,BlockPos origin, int index)
+    private void placeChild(ServerLevel level,BlockPos origin, int index,SpcursEntity entity)
     {
         if(index < 0 || index >= list.size())
             return;
@@ -71,6 +73,7 @@ public class ScChildren implements IComponentDisplay
             if(level.getBlockEntity(finalPos) instanceof TransformScEntity transformScEntity)
             {
                 transformScEntity.setChild(true);
+                transformScEntity.setTempSpawnModifier(entity.getTempSpawnModifier());
                 transformScEntity.setBaseSpawnerID(spawnConfig.getId());
             }
         }

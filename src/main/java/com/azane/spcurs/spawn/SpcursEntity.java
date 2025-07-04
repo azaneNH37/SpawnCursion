@@ -56,7 +56,7 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
     @Getter
     @Setter
     private boolean isChild = false;
-
+    @Getter
     private int childGenIndex = 0;
 
     @Getter
@@ -126,7 +126,7 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
     {
         ticks++;
         if(!isChild)
-            if(getScSpawner().getScChildren().tryPlace(level,pos,ticks,childGenIndex))
+            if(getScSpawner().getScChildren().tryPlace(level,pos,this))
                 childGenIndex++;
         //DebugLogger.log("SpcursEntity active tick at " + pos + " for spawner " + spawnerID + ", ticks: " + ticks);
         while (!spawnDataList.isEmpty() && spawnDataList.getFirst().isReadyToSpawn(ticks))
