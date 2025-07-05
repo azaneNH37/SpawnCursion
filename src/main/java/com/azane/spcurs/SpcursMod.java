@@ -3,6 +3,7 @@ package com.azane.spcurs;
 import com.azane.spcurs.debug.log.DebugLogger;
 import com.azane.spcurs.network.OgnmChannel;
 import com.azane.spcurs.registry.*;
+import com.azane.spcurs.resource.pack.CustomRepoSource;
 import com.azane.spcurs.resource.service.JsonTypeManagers;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
