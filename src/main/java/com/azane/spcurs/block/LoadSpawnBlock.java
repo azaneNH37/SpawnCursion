@@ -2,6 +2,7 @@ package com.azane.spcurs.block;
 
 import com.azane.spcurs.block.entity.TransformScEntity;
 import com.azane.spcurs.genable.tag.ScSpawnerTag;
+import com.azane.spcurs.registry.ModConfig;
 import com.azane.spcurs.registry.ModBlockEntity;
 import com.azane.spcurs.resource.service.ServerDataService;
 import net.minecraft.core.BlockPos;
@@ -47,6 +48,8 @@ public class LoadSpawnBlock extends BaseEntityBlock
     @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom)
     {
+        if(ModConfig.DEV_MODE.get())
+            return;
         BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
         if (blockEntity instanceof TransformScEntity transformScEntity)
         {

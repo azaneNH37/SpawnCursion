@@ -1,7 +1,7 @@
 package com.azane.spcurs.util;
 
 import com.azane.spcurs.genable.data.sc.ScSpawner;
-import com.azane.spcurs.registry.Config;
+import com.azane.spcurs.registry.ModConfig;
 import com.azane.spcurs.resource.manager.JsonDataManager;
 
 import java.util.function.Consumer;
@@ -17,7 +17,7 @@ public class DataServiceInit
             raw_color &= 0xFFFFFFFF;
             spawner.getDisplayContext().setEntityColor((raw_color & 0xFF000000) == 0 ? (raw_color | 0xFF000000) : raw_color);
         });
-        if(Config.DEBUG_SCDATA.get())
+        if(ModConfig.DEBUG_SCDATA.get())
             jm.debugLogAllData();
     };
 }

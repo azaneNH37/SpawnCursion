@@ -6,7 +6,6 @@ import com.azane.spcurs.genable.data.ScGson;
 import com.azane.spcurs.genable.data.sc.ScSpawner;
 import com.azane.spcurs.genable.tag.ScSpawnerTag;
 import com.azane.spcurs.lib.RlHelper;
-import com.azane.spcurs.registry.Config;
 import com.azane.spcurs.resource.manager.CommonDataManager;
 import com.azane.spcurs.resource.manager.INetworkCacheReloadListener;
 import com.azane.spcurs.resource.manager.specific.TagLikeDataManager;
