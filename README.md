@@ -1,10 +1,17 @@
 # Spawncursion
-### Currently in dev QAQ
+### 生成式入侵
+
 ## Intro
-A Minecraft mod aims for a more controllable and custom-designable "spawner" to 
-allow users to generate a series of multi-type enemies with initial effects,
-trace and control the generated enemies by their amounts, lifecycles and active areas, and introduce the generating process in 
-natural features , boss-like enemies or world events.
+This mod completely rewrites and enhances the vanilla spawner mechanics in Minecraft, 
+aiming to provide a highly controllable, freely customizable, and powerful monster-spawning system. 
+Through lightweight scripting such as JSON configuration files and the support of global datapacks, 
+the mod's functionality can be flexibly expanded and deeply customized. This allows for the introduction 
+of custom challenges and trials in the overworld, serves as a new form of boss battles in generated 
+structures, or enables the easy creation and management of complex combat scenarios and "campaigns."
+<br>
+本模组对《我的世界》原版刷怪笼功能进行了全面重写与强化，旨在提供一个高度可控、自由定制且功能强大的怪物生成系统。
+通过JSON文件等轻代码内容编写和全局数据包的支持，本模组的功能得以灵活扩展与高度定制，使其能够在主世界中引入自定义的挑战与试炼、
+作为结构生成中Boss战的全新表现形式，或用于便捷地创建和管理复杂的战斗场景与“战役”。
 
 ## Feature
 | ID | 名称     | 描述                           |
