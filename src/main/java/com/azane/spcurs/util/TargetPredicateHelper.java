@@ -58,6 +58,6 @@ public class TargetPredicateHelper
     public static Predicate<LivingEntity> createTeamPredicate(int team)
     {
         return le -> le.getPersistentData().contains(TEAM_KEY) &&
-                le.getPersistentData().getLong(TEAM_KEY) == team;
+                le.getPersistentData().getInt(TEAM_KEY) == team;
     }
 }

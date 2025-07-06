@@ -42,7 +42,7 @@ public class InstantSpawnBlock extends BaseEntityBlock
     {
         if(pLevel.isClientSide())
             return;
-        pLevel.scheduleTick(pPos,this,pLevel.getRandom().nextInt(20,60));
+        pLevel.scheduleTick(pPos,this,pLevel.getRandom().nextInt(5,10));
     }
 
     @Override

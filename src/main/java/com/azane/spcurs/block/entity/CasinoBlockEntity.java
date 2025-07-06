@@ -11,6 +11,7 @@ import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.network.OgnmChannel;
 import com.azane.spcurs.network.to_client.SyncCasinoPacket;
 import com.azane.spcurs.registry.ModBlockEntity;
+import com.azane.spcurs.registry.ModConfig;
 import com.azane.spcurs.spawn.IEnterScSpawner;
 import com.azane.spcurs.util.TargetPredicateHelper;
 import net.minecraft.core.BlockPos;
@@ -62,7 +63,7 @@ public class CasinoBlockEntity extends BlockEntity
     public void consumeAll(ServerLevel level,ServerPlayer player,BlockState state)
     {
         for (int i = 0; i < 2; i++) {
-            BlockPos pos = getBlockPos().north(16).east(16 * (i == 0 ? 1 : -1));
+            BlockPos pos = getBlockPos().north(ModConfig.GAME_CASINO_RANGE.get()).east(ModConfig.GAME_CASINO_RANGE.get() * (i == 0 ? 1 : -1));
             pos = pos.above(LevelHelper.getGroundHightAtFullChunk(level,pos, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES)-pos.getY()).above();
             ItemStack stack = inventory.getStackInSlot(i);
             if(stack.getItem() instanceof ScMycoItem scMycoItem)
@@ -71,9 +72,9 @@ public class CasinoBlockEntity extends BlockEntity
                 IEnterScSpawner.placeScSpawner(level,pos,state,(plevel, ppos, pstate)-> scMycoItem.getScSpawnerID(stack),
                     ()-> new ScEffects.Builder()
                         .add("spcurs:efc.attr-tmp",
-                            EfcAttrModifier.of(RlHelper.parse("generic.follow_range"), AttributeModifier.Operation.ADDITION,64.0D,null,null))
+                            EfcAttrModifier.of(RlHelper.parse("generic.follow_range"), AttributeModifier.Operation.ADDITION,ModConfig.GAME_CASINO_RANGE.get()*6,null,null))
                         .add("spcurs:goal.target.rm-tmp",
-                            GoalTargetRemoval.of(false,true))
+                            GoalTargetRemoval.of(true,true))
                         .add("spcurs:goal.target.scc-tmp",
                             GoalTargetScCreature.of(finalI == 0 ? TargetPredicateHelper.CASINO_TEAM_BLUE : TargetPredicateHelper.CASINO_TEAM_RED))
                         .add("spcurs:tag.int-team",

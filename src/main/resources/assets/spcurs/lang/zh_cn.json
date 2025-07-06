@@ -2,6 +2,7 @@
   "spcurs.sc.config.strategy.kill": "待击杀",
   "spcurs.sc.config.strategy.create": "待生成",
   "spcurs.sc.config.strategy.limit": "待处理",
+  "spcurs.sc.config.strategy.delay": "仅生成",
   "spcurs.sc.config.counter": "击杀限制：%d，生成限制：%d，同时存在限制：%d",
   "spcurs.sc.config.per_spawn": "单次最大生成：%d",
   "spcurs.sc.config.timer": "首次生成: %d刻；生成间隔：%d刻",

@@ -9,6 +9,7 @@ import com.azane.spcurs.genable.data.sc.ScSpawner;
 import com.azane.spcurs.genable.data.sc.collection.ScEffects;
 import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.registry.ModBlock;
+import com.azane.spcurs.registry.ModConfig;
 import com.azane.spcurs.resource.service.IResourceProvider;
 import com.azane.spcurs.resource.service.ServerDataService;
 import com.google.gson.Gson;
@@ -184,6 +185,11 @@ public class SpcursEntity implements INBTSerializable<CompoundTag>
 
     private void updateActive(ServerLevel level,BlockPos blockPos)
     {
+        if(ModConfig.SC_CONSTANT_ACTIVE.get())
+        {
+            active = true;
+            return;
+        }
         boolean isPlayerAround = level.hasNearbyAlivePlayer(
             (double)blockPos.getX() + (double)0.5F,
             (double)blockPos.getY() + (double)0.5F,

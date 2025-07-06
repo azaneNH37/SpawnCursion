@@ -2,6 +2,8 @@ package com.azane.spcurs.block;
 
 import com.azane.spcurs.block.entity.CasinoBlockEntity;
 import com.azane.spcurs.item.ScMycoItem;
+import com.azane.spcurs.lib.AsyncHandler;
+import com.azane.spcurs.registry.ModConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -9,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -49,6 +52,8 @@ public class CasinoBlock extends BaseEntityBlock
                         }
                     } else {
                         casino.consumeAll((ServerLevel) level, (ServerPlayer) player,this.defaultBlockState());
+                        if(ModConfig.GAME_CASINO_SPECTOR.get() != 0)
+                            AsyncHandler.delayExecute(ModConfig.GAME_CASINO_SPECTOR.get(), ()->((ServerPlayer) player).setGameMode(GameType.SPECTATOR));
                     }
                 } else {
                     if(!(heldItem.getItem() instanceof ScMycoItem))

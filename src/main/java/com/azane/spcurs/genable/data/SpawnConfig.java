@@ -52,14 +52,15 @@ public class SpawnConfig implements IComponentDisplay
     {
         kill,
         create,
-        limit
+        limit,
+        delay
     }
 
     public boolean spawnAvailable(int curKill,int curSpawn,int curExist)
     {
         return switch (strategy) {
             case kill -> curKill < killAmt;
-            case create -> curSpawn < createAmt;
+            case create,delay -> curSpawn < createAmt;
             case limit -> curExist < existingAmt && curKill < killAmt;
         };
     }
@@ -68,13 +69,14 @@ public class SpawnConfig implements IComponentDisplay
         return switch (strategy) {
             case kill, limit -> curKill >= killAmt;
             case create -> curSpawn >= createAmt;
+            case delay -> curKill >= createAmt;
         };
     }
     public int expectedSpawnAmt()
     {
         return switch (strategy) {
             case kill,limit -> killAmt;
-            case create -> createAmt;
+            case create,delay -> createAmt;
         };
     }
 

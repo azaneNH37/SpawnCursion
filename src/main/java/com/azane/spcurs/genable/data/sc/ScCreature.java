@@ -25,6 +25,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -161,6 +162,9 @@ public class ScCreature implements IresourceLocation, IComponentDisplay
 
     public boolean shouldCountDeath(Entity entity,DamageSource damageSource)
     {
+        // 乌云啊乌云
+        if(entity instanceof Creeper && entity.getRemovalReason() == Entity.RemovalReason.DISCARDED)
+            return true;
         if(entity.getRemovalReason() != Entity.RemovalReason.KILLED)
             return false;
         //TODO: 这里可以添加伤害类型检查来判断是否应该计数死亡
