@@ -52,8 +52,6 @@ public class CasinoBlock extends BaseEntityBlock
                         }
                     } else {
                         casino.consumeAll((ServerLevel) level, (ServerPlayer) player,this.defaultBlockState());
-                        if(ModConfig.GAME_CASINO_SPECTOR.get() != 0)
-                            AsyncHandler.delayExecute(ModConfig.GAME_CASINO_SPECTOR.get(), ()->((ServerPlayer) player).setGameMode(GameType.SPECTATOR));
                     }
                 } else {
                     if(!(heldItem.getItem() instanceof ScMycoItem))
