@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
@@ -18,6 +17,7 @@ import net.minecraft.server.packs.repository.RepositorySource;
 import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.resource.DelegatingPackResources;
+import net.minecraftforge.resource.PathPackResources;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.NotNull;
@@ -124,7 +124,7 @@ public enum CustomRepoSource implements RepositorySource
 
     private PathPackResources createPackResource(SpCursPack spCursPack) {
         try {
-            return new PathPackResources(spCursPack.name(), spCursPack.path(),false) {
+            return new PathPackResources(spCursPack.name(), false,spCursPack.path()) {
                 private final SecureJar secureJar = SecureJar.from(spCursPack.path());
 
                 @NotNull
