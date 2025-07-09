@@ -48,8 +48,6 @@ public class InstantSpawnBlock extends BaseEntityBlock
     @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom)
     {
-        if(ModConfig.DEV_MODE.get())
-            return;
         BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
         if (blockEntity instanceof TransformScEntity transformScEntity)
         {
@@ -62,7 +60,8 @@ public class InstantSpawnBlock extends BaseEntityBlock
                     else
                         return rl;
                 },transformScEntity::getTempSpawnModifier);
-            entity.setChild(transformScEntity.isChild());
+            if(entity != null)
+                entity.setChild(transformScEntity.isChild());
         }
     }
 }

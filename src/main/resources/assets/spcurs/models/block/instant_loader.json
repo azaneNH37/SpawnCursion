@@ -5,8 +5,8 @@
 	"ambientocclusion": false,
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "spcurs:block/loader",
-		"particle": "spcurs:block/loader"
+		"0": "spcurs:block/instant_loader",
+		"particle": "spcurs:block/instant_loader"
 	},
 	"elements": [
 		{

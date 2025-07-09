@@ -4,6 +4,7 @@ import com.azane.spcurs.genable.data.ScGson;
 import com.azane.spcurs.genable.data.sc.collection.ScEffects;
 import com.azane.spcurs.lib.RlHelper;
 import com.azane.spcurs.registry.ModBlockEntity;
+import com.azane.spcurs.registry.ModConfig;
 import com.azane.spcurs.spawn.IEnterScSpawner;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,16 +20,13 @@ import org.jetbrains.annotations.Nullable;
 public class TransformScEntity extends BlockEntity implements IEnterScSpawner
 {
     @Getter
-    @Setter
     private ResourceLocation baseSpawnerID;
 
     @Getter
-    @Setter
     @Nullable
     private ScEffects tempSpawnModifier;
 
     @Getter
-    @Setter
     private boolean isChild = false;
 
     private boolean onlyOnce = false;
@@ -44,6 +42,10 @@ public class TransformScEntity extends BlockEntity implements IEnterScSpawner
 
     public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, TransformScEntity pBlockEntity)
     {
+        if(ModConfig.DEV_MODE.get())
+            return;
+        if(pBlockEntity.baseSpawnerID == null)
+            return;
         if(pLevel.hasNearbyAlivePlayer(pPos.getX(), pPos.getY(), pPos.getZ(), 16))
         {
             if (pBlockEntity.onlyOnce)
@@ -98,5 +100,24 @@ public class TransformScEntity extends BlockEntity implements IEnterScSpawner
     @Override
     public CompoundTag getUpdateTag() {
         return this.saveWithoutMetadata();
+    }
+
+    @Override
+    public void setBaseSpawnerID(ResourceLocation rl)
+    {
+        this.baseSpawnerID = rl;
+        this.setChanged();
+    }
+
+    public void setChild(boolean isChild)
+    {
+        this.isChild = isChild;
+        this.setChanged();
+    }
+
+    public void setTempSpawnModifier(@Nullable ScEffects modifier)
+    {
+        this.tempSpawnModifier = modifier;
+        this.setChanged();
     }
 }
